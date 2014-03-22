@@ -1,0 +1,56 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 1%;
+	height: 10%;
+	width: 85%;
+	padding-bottom: 5%;
+	padding-top: 2%;
+}
+
+.footer_img{
+	width: 10%;
+	height: 50%;
+}
+
+
+input#log{
+  width: 80%;
+  margin-left: 10%;
+}
+
+.jumbotron > button#run  {
+	margin-top: 2%;
+	margin-left: 75%;
+	margin-right: 2%;	
+	width:10%;
+}
+
+.jumbotron > button#clear  {
+	margin-top: 2%;
+	width:10%;
+}
+
+.panel {
+	display: none;
+	width: 25%;
+}
+
+#log-in {
+	margin-left:40%;
+	margin-top:10%;
+}
