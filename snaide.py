@@ -1,6 +1,8 @@
 from py2neo import neo4j
 from py2neo import cypher 
 import MySQLdb
+import cgitb
+cgitb.enable()
 
 #***********************************************************************************************************************
 
@@ -137,20 +139,24 @@ def model_pages(cur1, cur2, cur3):
 def get_all_users(graph_db):
 	query = "MATCH (n:User) RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
-	print "\nLoading Users............"
+	ret = []
 	for row in data:
-		print row[0]
-		print "\nID : "+str(row[0]["guid"])
-		print "Name : "+str(row[0]["name"])
+		ret.append( {"guid" : row[0]["guid"], 
+								 "name" : str(row[0]["name"])} 
+							);
+	return ret
+	'''
+	print "\n<br \>ID : "+str(row[0]["guid"])+"<br \>"
+	print "Name : "+str(row[0]["name"])+"<br \>"
 	print
-	print "Your Social Network has "+str(len(data))+" Users"
+	print "<br \>\nYour Social Network has "+str(len(data))+" Users\n<br \>"
 	print
+	'''
 
 #***********************************************************************************************************************
 
 def get_one_user(graph_db, user_name, user_guid):
 	if user_name != None and user_guid != None :
-		print "sdsfb"
 		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"' and n.guid = "+str(user_guid)+"  RETURN n"
 	elif user_name == None:
 		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" RETURN n"
@@ -158,13 +164,22 @@ def get_one_user(graph_db, user_name, user_guid):
 		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
-		print "User Found"
 		for row in data:
-			print "\nID : "+str(row[0]["guid"])
-			print "Name : "+str(row[0]["name"])
-		print
+			ret = ( {"guid" : row[0]["guid"], 
+								 "name" : str(row[0]["name"])} 
+							);
 	else:
-		print "\nUser not found.\n"
+		ret = "\n<br \>User not found.<br \>\n"
+
+	return ret
+'''			
+	print "\n<br \>ID : "+str(row[0]["guid"])+"\n<br \>"
+	print "Name : "+str(row[0]["name"])+"\n<br \>"
+	print
+	else:
+		print "\n<br \>User not found.<br \>\n"
+'''
+
 
 #***********************************************************************************************************************
 
@@ -176,10 +191,10 @@ if __name__ == "__main__":
 	#model_groups(cur1)
 	#model_events(cur1, cur2, cur3)
 	#model_pages(cur1, cur2, cur3)
-	#get_all_users(graph_db)
-	get_one_user(graph_db, "vikyath", 39)
-	get_one_user(graph_db, "vikyath", None)
-	get_one_user(graph_db, None, "39")
+	#users = get_all_users(graph_db)
+	#get_one_user(graph_db, "vikyath", 39)
+	#get_one_user(graph_db, "vikyath", None)
+	#get_one_user(graph_db, None, "39")
 
 
 #***********************************************************************************************************************
