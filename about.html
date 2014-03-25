@@ -27,7 +27,6 @@
     <![endif]-->
     <script src="js/jquery.js"></script>
   </head>
-
   <body role="document">
 
     <!-- Fixed navbar -->
@@ -61,77 +60,104 @@
             <h3 class="panel-title">get_one_user</h3>
           </div>
           <div class="panel-body">
+          Parameters : user_name, user_guid<br>
           Returns a user based username or guid
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_all_users</h3>
           </div>
           <div class="panel-body">
+          Parameters : None<br>
+          Returns all users of the Social Network as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_one_event</h3>
           </div>
           <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns event information based on the name of the event or based on the guid of the event
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_all_events</h3>
           </div>
           <div class="panel-body">
+          Parameters : None<br>
+          Returns all events in the Social Network as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_events_owned_by</h3>
           </div>
           <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns all events owned/created by a particular user based on username or guid as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_statuses_by</h3>
           </div>
           <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns all statuses posted by a particular user based on username or guid as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_comments_by</h3>
           </div>
           <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns all comments posted by a particular user based on username or guid as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_group_members</h3>
           </div>
           <div class="panel-body">
+          Parameters : group_name, group_guid<br>
+          Returns all members of a particular group based on the group name or guid as a list
           </div>
         </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title">get_groups_owned_by</h3>
           </div>
           <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns all the groups owned/created by a particular user based on username or guid as a list
           </div>
         </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_pages</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns all pages in the Social Network as a list
+          </div>
+        </div>
+
       </div>
 
-    </div> <!-- /container -->
-
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
