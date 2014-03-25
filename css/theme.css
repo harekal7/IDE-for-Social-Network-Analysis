@@ -45,7 +45,7 @@ input#log{
 	width:10%;
 }
 
-.panel {
+.hidden-panel {
 	display: none;
 	width: 25%;
 }
@@ -53,4 +53,10 @@ input#log{
 #log-in {
 	margin-left:40%;
 	margin-top:10%;
+}
+
+div#wrong
+{
+	color: red;
+	display: none;
 }

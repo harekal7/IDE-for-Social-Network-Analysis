@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>SNA!DE</title>
+    <title>SNAIDE</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,13 +40,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">SNA!DE</a>
+          <a class="navbar-brand" href="index.html">SNAIDE</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="home.html">Home</a></li>
             <li><a href="offline.html">Access Offline</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="about.html">Documentation</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -56,18 +56,21 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>SNA!DE</h1>
+        <h1>SNAIDE</h1>
         <p>an Integrated Development Environment for Analysing data of Social Network built using Elgg</p>
         <p><a id="login" href="#" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary hidden-panel">
           <div class="panel-heading">
             <h3 class="panel-title">Login</h3>
           </div>
           <div class="panel-body">
-            <input id="log" type="text" placeholder="Username">
-            <p></p>
-            <input id="log" type="password" placeholder="Password">
-            <p><a id="log-in" href="home.html" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
+            <div id="wrong">Wrong Username or Password. Try Again</div>
+            <form id="elgg" method="POST" action="http://localhost/elgg/services/api/rest/json/?method=auth.gettoken">
+              <input id="log-t" type="text" name="username" placeholder="Username">
+              <p></p>
+              <input id="log-p" type="password" name="password" placeholder="Password">
+              <p><a id="log-in" href="#" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
+            </form>
           </div>
         </div>
       </div>
@@ -85,6 +88,27 @@
       $("#login").click(function(){
         $("#login").css({"display":"none"})
         $(".panel").css({"display":"block"})
+      });
+      $("#log-in").click(function(){
+        $("#wrong").css({"display":"none"});
+        $.ajax({
+            url:"http://localhost/elgg/services/api/rest/json/?method=auth.gettoken",
+            type:"POST",
+            dataType:"text",
+            data: { "username" : $("#log-t").val(), "password":$("#log-p").val() },
+            success:function(data)
+            {
+              s = JSON.parse(data);
+              if ( s.status >= 0 )
+              {
+                window.location.replace("update.php");
+              }
+              else
+              {
+                $("#wrong").css({"display":"block"});
+              }
+            }
+          });
       });
     });
     </script>
