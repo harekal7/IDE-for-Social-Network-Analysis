@@ -1,5 +1,6 @@
 import snaide
-print "hi"
-print snaide.get_all_pages(),
-print snaide.get_all_users()
-print "bye"
+
+g = snaide.get_all_pages()
+
+for i in g:
+  print i["name"]

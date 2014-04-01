@@ -60,3 +60,8 @@ div#wrong
 	color: red;
 	display: none;
 }
+
+.username-panel
+{
+	width: 35%;
+}
