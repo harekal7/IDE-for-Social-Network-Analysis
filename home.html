@@ -67,6 +67,10 @@
       <pre id="out"></pre>
     </div>
 
+    <div class="container theme-showcase" role="main">
+      <label>Click on Get to download the whole database</label>
+      <button id="download" type="button" class="btn btn-lg btn-default">Get</button>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -94,21 +98,36 @@
                   } );
 
       $(document).ready(function(){
+        username = window.location.href.split("=")[1];
         $("#out").html("");
         $("#run").click(function(){
           editor.save();
+        
           $.ajax({
             url:"server.php",
             type:"POST",
             dataType:"text",
-            data: { "t1" : $("#t1").val() },
+            data: { "t1" : $("#t1").val(), "username": username  },
             success:function(data)
             {
-              //alert(data);
               $("#out").html(data);
             }
           });
         });
+
+        $("#download").click(function(){
+          $.ajax({
+            url:"download.php",
+            type:"POST",
+            dataType:"text",
+            data: { "t1" : $("#t1").val(), "username": username  },
+            success:function(data)
+            {
+              window.location.href = "http://localhost/IDE/gdb.txt";
+            }
+          });
+        });
+        
         $("#clear").click(function(){
            $("#out").html("");
           editor.save();
