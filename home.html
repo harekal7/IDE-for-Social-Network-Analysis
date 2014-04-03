@@ -114,7 +114,7 @@
 
         $("#run").click(function(){
           editor.save();
-        
+        	alert(editor.getDoc().getValue());
           $.ajax({
             url:"server.php",
             type:"POST",

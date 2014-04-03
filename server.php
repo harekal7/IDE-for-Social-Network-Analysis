@@ -1,6 +1,4 @@
 <?php
-
-
 	$content = $_POST['t1'];
 	$username = $_POST['username'];
 
@@ -13,7 +11,7 @@
 		$file_name = "$username";	
 	}
 	$file = "/var/www/IDE/$file_name.py";
-	shell_exec("touch $file");
+	shell_exec("rm $file; touch $file");
 	file_put_contents($file, $content);
 	echo shell_exec("python /var/www/IDE/$file_name.py 2>&1");
 ?>
