@@ -88,19 +88,30 @@
     <!--<script src="js/docs.min.js"></script>-->
     
     <script type="text/javascript">
-      
-      var editor = CodeMirror.fromTextArea(document.getElementById("t1"), 
-                  {
-                    lineNumbers: true,
-                    mode: "text/x-python",
-                    theme: "cobalt",
-                    indentWithTabs: true,
-                    readOnly: false
-                  } );
 
       $(document).ready(function(){
         username = window.location.href.split("=")[1];
         $("#out").html("");
+
+        $.ajax({
+           url:username+".py",
+           type:"GET",
+           dataType:"text",
+           success:function(data)
+           {
+              editor.getDoc().setValue(data);
+           }
+        });
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("t1"), 
+        {
+          lineNumbers: true,
+          mode: "text/x-python",
+          theme: "cobalt",
+          indentWithTabs: true,
+          readOnly: false
+        } );
+
         $("#run").click(function(){
           editor.save();
         
@@ -131,7 +142,6 @@
         
         $("#clear").click(function(){
            $("#out").html("");
-          editor.save();
         });
       });
     </script>
