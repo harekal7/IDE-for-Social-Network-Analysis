@@ -1,4 +1,6 @@
 <?php
+
+
 	$content = $_POST['t1'];
 	$username = $_POST['username'];
 

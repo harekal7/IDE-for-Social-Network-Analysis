@@ -47,8 +47,12 @@
             <li><a href="offline.html">Access Offline</a></li>
             <li><a href="about.html">Documentation</a></li>
           </ul>
+<<<<<<< HEAD
           <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
         </div>
+=======
+        </div><!--/.nav-collapse -->
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
       </div>
     </div>  
 
@@ -88,10 +92,23 @@
     <!--<script src="js/docs.min.js"></script>-->
     
     <script type="text/javascript">
+<<<<<<< HEAD
+=======
+      
+      var editor = CodeMirror.fromTextArea(document.getElementById("t1"), 
+                  {
+                    lineNumbers: true,
+                    mode: "text/x-python",
+                    theme: "cobalt",
+                    indentWithTabs: true,
+                    readOnly: false
+                  } );
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
+
       $(document).ready(function(){
         username = window.location.href.split("=")[1];
         $("#out").html("");
-
+<<<<<<< HEAD
 
         $.ajax({
            url:username+".py",
@@ -112,6 +129,8 @@
           readOnly: false
         } );
 
+=======
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
         $("#run").click(function(){
           editor.save();
         
@@ -142,7 +161,11 @@
         
         $("#clear").click(function(){
            $("#out").html("");
-	});
+<<<<<<< HEAD
+=======
+          editor.save();
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
+        });
       });
     </script>
   </body>
