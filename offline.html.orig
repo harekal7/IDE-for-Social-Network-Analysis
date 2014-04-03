@@ -25,7 +25,6 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="js/jquery.js"></script>
   </head>
 
   <body role="document">
@@ -45,10 +44,13 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="home.html">Home</a></li>
-            <li><a href="offline.html">Access Offline</a></li>
+            <li class="active"><a href="offline.html">Access Offline</a></li>
             <li><a href="about.html">Documentation</a></li>
           </ul>
+<<<<<<< HEAD
           <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+=======
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
         </div><!--/.nav-collapse -->
       </div>
     </div>  
@@ -57,63 +59,32 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>SNAIDE</h1>
-        <p>an Integrated Development Environment for Analysing data of Social Network built using Elgg</p>
-        <p><a id="login" href="#" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
-        <div class="panel panel-primary hidden-panel">
+        <div class="panel panel-primary username-panel" style="size:25%">
           <div class="panel-heading">
-            <h3 class="panel-title">Login</h3>
+            <h3 class="panel-title"></h3>
           </div>
           <div class="panel-body">
-            <div id="wrong">Wrong Username or Password. Try Again</div>
-            <form id="elgg" method="POST" action="http://localhost/elgg/services/api/rest/json/?method=auth.gettoken">
-              <input id="log-t" type="text" name="username" placeholder="Username">
-              <p></p>
-              <input id="log-p" type="password" name="password" placeholder="Password">
-              <p><a id="log-in" href="#" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
-            </form>
+             <input id="log-t" type="text" name="username" placeholder="Enter your name">
+             <p></p>
+             <label>Upload Local Graph Database</label>
+             <input type="file">
+             <p><a id="log-in" href="#" class="btn btn-primary btn-lg" role="button">Go!! &raquo;&raquo;</a></p>
           </div>
         </div>
-        <p>OR</p>
-        <p><a id="offline" href="offline.html" class="btn btn-primary btn-lg" role="button">Access Offline &raquo;</a></p>
-       </div>
+      </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
     </div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-dropdown.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-      $("#login").click(function(){
-        $("#login").css({"display":"none"})
-        $(".panel").css({"display":"block"})
-      });
-      $("#log-in").click(function(){
-        $("#wrong").css({"display":"none"});
-        $.ajax({
-            url:"http://localhost/elgg/services/api/rest/json/?method=auth.gettoken",
-            type:"POST",
-            dataType:"text",
-            data: { "username" : $("#log-t").val(), "password":$("#log-p").val() },
-            success:function(data)
-            {
-              s = JSON.parse(data);
-              if ( s.status >= 0 )
-              {
-                window.location.replace("update.php?username="+$("#log-t").val());
-              }
-              else
-              {
-                $("#wrong").css({"display":"block"});
-              }
-            }
-          });
-      });
-    });
-    </script>
+    <!--<script src="js/docs.min.js"></script>-->
   </body>
 </html>
