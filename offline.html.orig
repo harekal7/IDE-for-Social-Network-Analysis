@@ -47,7 +47,10 @@
             <li class="active"><a href="offline.html">Access Offline</a></li>
             <li><a href="about.html">Documentation</a></li>
           </ul>
+<<<<<<< HEAD
           <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+=======
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
         </div><!--/.nav-collapse -->
       </div>
     </div>  
@@ -69,6 +72,10 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
     </div> <!-- /container -->
 
 

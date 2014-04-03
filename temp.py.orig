@@ -1,8 +1,11 @@
 import snaide
 
+<<<<<<< HEAD
 for page in snaide.get_all_pages():
 	print page["name"]
+=======
 g = snaide.get_all_pages()
 
 for i in g:
   print i["name"]
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e

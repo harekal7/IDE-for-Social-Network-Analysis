@@ -1,5 +1,9 @@
 <?php
 	$username = $_GET["username"];
+<<<<<<< HEAD
 	//shell_exec("python /var/www/IDE/update.py");
+=======
+	shell_exec("python /var/www/IDE/update.py");
+>>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
 	header("Location: home.html?username=$username");
 ?>
