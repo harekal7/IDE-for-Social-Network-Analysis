@@ -1,3 +1,9 @@
+<?php
+  if ( !isset($_SESSION['is_logged_in']) || ( isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']==0 ) )
+  { 
+    header("Location: index.php");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,22 +15,10 @@
   
     <title>SNAIDE</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/theme.css" rel="stylesheet">
-    
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="css/theme.css" rel="stylesheet">  
+  
   </head>
 
   <body role="document">
@@ -39,15 +33,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">SNAIDE</a>
+          <a class="navbar-brand" href="index.php">SNAIDE</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home.html">Home</a></li>
-            <li><a href="offline.html">Help</a></li>
+            <li class="active"><a href="home.php">Home</a></li>
+            <li><a href="offline.html">Access Offline</a></li>
             <li><a href="about.html">Documentation</a></li>
           </ul>
-          <a href="logout.php"><button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button></a>
+          <button type="button" class="btn btn-lg btn-danger" id="button-right" onclick="logout.php">Log Out</button>
         </div>
       </div>
     </div>  
@@ -66,6 +60,11 @@
     <div class="container theme-showcase" role="main">
       <span>Output </span>
       <pre id="out"></pre>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <label>Click on Get to download the whole database</label>
+      <button id="download" type="button" class="btn btn-lg btn-default">Get</button>
     </div>
 
     <!-- Bootstrap core JavaScript
@@ -87,6 +86,17 @@
         username = window.location.href.split("=")[1];
         $("#out").html("");
 
+
+        $.ajax({
+           url:username+".py",
+           type:"GET",
+           dataType:"text",
+           success:function(data)
+           {
+              editor.getDoc().setValue(data);
+           }
+        });
+
         var editor = CodeMirror.fromTextArea(document.getElementById("t1"), 
         {
           lineNumbers: true,
@@ -98,7 +108,7 @@
 
         $("#run").click(function(){
           editor.save();
-        	//alert(editor.getDoc().getValue());
+        	alert(editor.getDoc().getValue());
           $.ajax({
             url:"server.php",
             type:"POST",
