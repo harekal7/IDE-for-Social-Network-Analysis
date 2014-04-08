@@ -96,18 +96,25 @@ def model_events(db):
 	cur2 = db.cursor() 
 	cur3 = db.cursor()
 
-	cur1.execute("SELECT guid , time_created FROM elgg_entities WHERE subtype = 7")
+	cur1.execute("SELECT guid , time_created, owner_guid FROM elgg_entities WHERE subtype = 7")
 	for row1 in cur1.fetchall():
-	    cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
-	    for row2 in cur2.fetchall():
-	        event, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1]})
-	        event.add_labels("Event")
-	        cur3.execute("SELECT guid_two FROM elgg_entity_relationships WHERE guid_one = "+str(row1[0])+" ")
-	        for row3 in cur3.fetchall():
-	            # create a relationship user -> attends -> event
-	            #  create a relationship user -> attends -> event
-	            query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Attends]->(b) CREATE (b)-[r2:Attendees]->(a) RETURN r1, r2"
-	            result = neo4j.CypherQuery(graph_db, query_string).execute()
+		query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Owns_event]->(b) CREATE (b)-[r2:Owner_event]->(a) RETURN r1, r2"
+		result = neo4j.CypherQuery(graph_db, query_string).execute()
+
+		cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
+		for row2 in cur2.fetchall():
+			event, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1]})
+			event.add_labels("Event")
+			cur3.execute("SELECT guid_two FROM elgg_entity_relationships WHERE guid_one = "+str(row1[0])+" ")
+			for row3 in cur3.fetchall():
+				query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Attends]->(b) CREATE (b)-[r2:Attendees]->(a) RETURN r1, r2"
+				result = neo4j.CypherQuery(graph_db, query_string).execute()
+
+	cur1.execute("SELECT guid , time_created, owner_guid FROM elgg_entities WHERE subtype = 7")
+	for row1 in cur1.fetchall():
+		query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Owns_event]->(b) CREATE (b)-[r2:Owner_event]->(a) RETURN r1, r2"
+		result = neo4j.CypherQuery(graph_db, query_string).execute()
+
 
 #***********************************************************************************************************************
 

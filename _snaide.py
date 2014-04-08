@@ -73,11 +73,11 @@ def _get_all_events(graph_db):
 #***********************************************************************************************************************
 def _get_events_owned_by(graph_db,user_name, user_guid):
 	if user_name != None and user_guid != None :
-		query = "MATCH (n:Event)-[:Owned_by]-> (m:User) WHERE m.guid = "+str(user_guid)+" and m.name = "+"'"+str(user_name)+"' RETURN n"
+		query = "MATCH (n:Event)-[:Owner_event]-> (m:User) WHERE m.guid = "+str(user_guid)+" and m.name = "+"'"+str(user_name)+"' RETURN n"
 	elif user_name == None:
-		query = "MATCH (n:Event)-[:Owned_by]-> (m:User) WHERE m.guid = "+str(user_guid)+" RETURN n"
+		query = "MATCH (n:Event)-[:Owner_event]-> (m:User) WHERE m.guid = "+str(user_guid)+" RETURN n"
 	else:
-		query = "MATCH (n:Event)-[:Owned_by]-> (m:User) WHERE m.name = "+"'"+str(user_name)+"'"+" RETURN n"
+		query = "MATCH (n:Event)-[:Owner_event]-> (m:User) WHERE m.name = "+"'"+str(user_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
 	
 	if data:
