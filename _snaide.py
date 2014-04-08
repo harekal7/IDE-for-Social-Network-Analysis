@@ -82,8 +82,10 @@ def _get_events_owned_by(graph_db,user_name, user_guid):
 	
 	if data:
 		ret = []
-		ret.append( {"id" : row[0]["guid"], "name" : str(row[0]["name"])} )
-
+		for row in data:
+			ret.append( {"id" : row[0]["guid"], "name" : str(row[0]["name"])} )
+	else:
+		ret = "No Events"
 	return ret
 
 '''
@@ -132,9 +134,10 @@ def _get_statuses_by(graph_db,user_name, user_guid):
 	else:
 		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
 	data, metadata = cypher.execute(graph_db, query)
+	ret = []
 	if data:
 		for row in data:
-			ret = {"status_id" : row[0]["status_id"], "message" : str(row[0]["message"]) }
+			ret.append({"status_id" : row[0]["status_id"], "message" : str(row[0]["message"]) })
 
 	return ret
 '''
@@ -155,9 +158,11 @@ def _get_comments_by(graph_db, user_name, user_guid):
 	else:
 		query = "MATCH (n:User)-[:comments]-> (m:Comment) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
 	data, metadata = cypher.execute(graph_db, query)
+	ret = []
 	if data:
 		for row in data:
-			ret = {"id" : row[0]["comment_id"], "message" : str(row[0]["message"]) }
+			ret.append({"id" : row[0]["comment_id"], "message" : str(row[0]["message"]) })
+	return ret
 '''			
 			print "\nComment : "+str(row[0]["message"])
 			print "Id : "+str(row[0]["comment_id"])
@@ -176,9 +181,10 @@ def _get_group_members(graph_db, group_name, group_guid):
 	else:
 		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE m.name = "+"'"+str(group_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
+	ret = []
 	if data:
 		for row in data:
-			ret = {"id" : row[0]["guid"], "name" : str(row[0]["name"]) }
+			ret.append({"id" : row[0]["guid"], "name" : str(row[0]["name"]) })
 
 	return ret
 '''			
@@ -199,9 +205,10 @@ def _get_groups_owned_by (graph_db, user_name, user_guid):
 	else:
 		query = "MATCH (n:User)-[:Owns]-> (m:Group) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
 	data, metadata = cypher.execute(graph_db, query)
+	ret = []
 	if data:
 		for row in data:
-			ret = {"id" : row[0]["group_id"], "name" : str(row[0]["name"]) }			
+			ret.append({"id" : row[0]["group_id"], "name" : str(row[0]["name"]) }	)		
 
 	return ret
 '''
