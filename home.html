@@ -87,6 +87,17 @@
         username = window.location.href.split("=")[1];
         $("#out").html("");
 
+
+        $.ajax({
+           url:username+".py",
+           type:"GET",
+           dataType:"text",
+           success:function(data)
+           {
+              editor.getDoc().setValue(data);
+           }
+        });
+
         var editor = CodeMirror.fromTextArea(document.getElementById("t1"), 
         {
           lineNumbers: true,
@@ -98,7 +109,6 @@
 
         $("#run").click(function(){
           editor.save();
-        	//alert(editor.getDoc().getValue());
           $.ajax({
             url:"server.php",
             type:"POST",

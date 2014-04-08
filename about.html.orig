@@ -44,14 +44,15 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="home.html">Home</a></li>
-            <li><a href="offline.html">Access Offline</a></li>
+            <li><a href="offline.html">Help</a></li>
             <li><a href="about.html" class="active">Documentation</a></li>
           </ul>
 <<<<<<< HEAD
-          <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+	  <a href="logout.php"><button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button></a>
 =======
->>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
-        </div><!--/.nav-collapse -->
+	  <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+>>>>>>> 5b11d9307a60edba83e738df9291d0391f63b2fc
+	</div><!--/.nav-collapse -->
       </div>
     </div>  
 
