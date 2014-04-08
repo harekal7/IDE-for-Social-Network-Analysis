@@ -45,13 +45,14 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="home.html">Home</a></li>
-            <li><a href="offline.html">Access Offline</a></li>
+            <li><a href="offline.html">Help</a></li>
             <li><a href="about.html">Documentation</a></li>
           </ul>
 <<<<<<< HEAD
-          <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+          <!--<button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>-->
 =======
->>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
+          <button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button>
+>>>>>>> 5b11d9307a60edba83e738df9291d0391f63b2fc
         </div><!--/.nav-collapse -->
       </div>
     </div>  
@@ -63,11 +64,6 @@
         <h1>SNAIDE</h1>
         <p>an Integrated Development Environment for Analysing data of Social Network built using Elgg</p>
         <p><a id="login" href="#" class="btn btn-primary btn-lg" role="button">Login &raquo;</a></p>
-<<<<<<< HEAD
-=======
-        <p>OR</p>
-        <p><a id="offline" href="offline.html" class="btn btn-primary btn-lg" role="button">Access Offline &raquo;</a></p>
->>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
         <div class="panel panel-primary hidden-panel">
           <div class="panel-heading">
             <h3 class="panel-title">Login</h3>
@@ -83,11 +79,13 @@
           </div>
         </div>
 <<<<<<< HEAD
+        <!--<p>OR</p>
+        <p><a id="offline" href="offline.html" class="btn btn-primary btn-lg" role="button">Access Offline &raquo;</a></p>-->
+=======
         <p>OR</p>
         <p><a id="offline" href="offline.html" class="btn btn-primary btn-lg" role="button">Access Offline &raquo;</a></p>
-=======
->>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
-      </div>
+>>>>>>> 5b11d9307a60edba83e738df9291d0391f63b2fc
+       </div>
 
     </div> <!-- /container -->
 

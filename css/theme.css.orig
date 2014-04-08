@@ -63,14 +63,15 @@ div#wrong
 
 .username-panel
 {
-	width: 35%;
 <<<<<<< HEAD
+	width: 45%;
+=======
+	width: 35%;
+>>>>>>> 5b11d9307a60edba83e738df9291d0391f63b2fc
 }
 
 #button-right
 {
 	height: 80%;
 	margin-left:56%;
-=======
->>>>>>> 4ad0865bec12924ab1db62296e65d39c7d2de05e
 }
