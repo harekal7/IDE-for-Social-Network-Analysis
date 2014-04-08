@@ -1,4 +1,3 @@
 import snaide
 
-
-print snaide.get_all_users()
+print snaide.get_one_user("esai", None)
