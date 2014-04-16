@@ -14,6 +14,7 @@ def init(_host, _user, _passwd, _db, _url):
 def clear_graph_db(graph_db):
 	cypher.execute(graph_db, "start r=relationship(*) delete r;")
 	cypher.execute(graph_db, "MATCH (n {}) DELETE n")
+	#MATCH n-[r]-()
 
 #***********************************************************************************************************************
 
@@ -25,27 +26,28 @@ def model_users_statuses_comments(db):
 	cur5 = db.cursor() 
 	cur1.execute("SELECT name, guid FROM elgg_users_entity")
 	for row1 in cur1.fetchall():
-	    user, = graph_db.create({"name": row1[0], "guid":row1[1]})
-	    user.add_labels("User")
-	    cur2.execute("SELECT guid, time_updated FROM elgg_entities WHERE owner_guid="+str(row1[1])+" AND subtype=5")
-	    for row2 in cur2.fetchall():
-	        cur3.execute("SELECT description FROM elgg_objects_entity WHERE guid="+str(row2[0]))
-	        for row3 in cur3.fetchall():
-	            cur4.execute("SELECT Count(*) FROM elgg_annotations WHERE entity_guid="+str(row2[0])+" AND name_id=16")
-	            for row4 in cur4.fetchall():
-	                if cur5.execute("SELECT guid_two FROM elgg_entity_relationships WHERE guid_one="+str(row2[0])+" AND relationship like 'parent'"):
-	                    for row5 in cur5.fetchall():
-	                        comment, = graph_db.create({"comment_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0] })
-	                        comment.add_labels("Comment")
-	                        query_string = "MATCH (a:Status),(b:Comment) WHERE a.status_id ="+str(row5[0])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:has_comment]->(b) RETURN r"
-	                        result = neo4j.CypherQuery(graph_db, query_string).execute()
-	                        query_string = "MATCH (a:User),(b:Comment) WHERE a.guid ="+str(row1[1])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:comments]->(b) RETURN r"
-	                        result = neo4j.CypherQuery(graph_db, query_string).execute()
-	                else:
-	                    status, = graph_db.create({"status_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0] })
-	                    status.add_labels("Status")
-	                    query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r:Posted]->(b) RETURN r"
-	                    result = neo4j.CypherQuery(graph_db, query_string).execute()
+			print unicode(row1[0], errors='ignore')
+			user, = graph_db.create({"name": unicode(row1[0], errors='ignore'), "guid":row1[1]})
+			user.add_labels("User")
+			cur2.execute("SELECT guid, time_updated FROM elgg_entities WHERE owner_guid="+str(row1[1])+" AND subtype=5")
+			for row2 in cur2.fetchall():
+				cur3.execute("SELECT description FROM elgg_objects_entity WHERE guid="+str(row2[0]))
+				for row3 in cur3.fetchall():
+						cur4.execute("SELECT Count(*) FROM elgg_annotations WHERE entity_guid="+str(row2[0])+" AND name_id=16")
+						for row4 in cur4.fetchall():
+								if cur5.execute("SELECT guid_two FROM elgg_entity_relationships WHERE guid_one="+str(row2[0])+" AND relationship like 'parent'"):
+										for row5 in cur5.fetchall():
+												comment, = graph_db.create({"comment_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0] })
+												comment.add_labels("Comment")
+												query_string = "MATCH (a:Status),(b:Comment) WHERE a.status_id ="+str(row5[0])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:has_comment]->(b) RETURN r"
+												result = neo4j.CypherQuery(graph_db, query_string).execute()
+												query_string = "MATCH (a:User),(b:Comment) WHERE a.guid ="+str(row1[1])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:comments]->(b) RETURN r"
+												result = neo4j.CypherQuery(graph_db, query_string).execute()
+								else:
+										status, = graph_db.create({"status_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0] })
+										status.add_labels("Status")
+										query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r:Posted]->(b) RETURN r"
+										result = neo4j.CypherQuery(graph_db, query_string).execute()
 
 #**********************************************************************************************************************
 

@@ -3,11 +3,22 @@ from py2neo import cypher
 
 #***********************************************************************************************************************
 
+
+'''
+Initialises graph db handler
+and returns it to the caller
+'''
+
 def _init(_url):
 	graph_db = neo4j.GraphDatabaseService(_url)
 	return graph_db
 
 #***********************************************************************************************************************
+
+'''
+fetches all the users of the social network
+and returns it in the form of a list of key-value pairs to the caller
+'''
 
 def _get_all_users(graph_db):
 	query = "MATCH (n:User) RETURN n"

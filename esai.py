@@ -1,4 +1,3 @@
 import snaide
-print snaide.get_all_users()
-for page in snaide.get_all_pages():
-  print page["name"]
+for event in snaide.get_events_owned_by("esai", None):
+  print event["name"]

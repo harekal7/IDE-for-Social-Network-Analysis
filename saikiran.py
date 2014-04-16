@@ -1,3 +1,4 @@
 import snaide
 
-print snaide.get_events_owned_by("saikiran", None)
+for user in  snaide.get_all_users():
+  print user["name"]
