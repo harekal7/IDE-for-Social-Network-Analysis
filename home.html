@@ -58,6 +58,7 @@
         <form id="python-code" action="server.php" method="POST">
               <textarea id="t1" name="t2">import snaide</textarea>
         </form>
+        <button id="sync" type="button" class="btn btn-lg btn-warning">Sync</button>
         <button id="run" type="button" class="btn btn-lg btn-success">Run</button>
         <button id="clear" type="button" class="btn btn-lg btn-danger">Clear</button>
       </div>
@@ -85,6 +86,8 @@
     <script type="text/javascript">
       $(document).ready(function(){
         username = window.location.href.split("=")[1];
+        if (username == null)
+          username = "temp";
         $("#out").html("");
 
 
@@ -133,6 +136,17 @@
             }
           });
         });
+      $("#sync").click(function(){
+        $.ajax({
+            url:"update.php",
+            type:"GET",
+            dataType:"text",
+            success:function(data)
+            {
+              alert("Sync successful");
+            }
+          });
+      });
         
         $("#clear").click(function(){
            $("#out").html("");

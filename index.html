@@ -102,7 +102,7 @@
               s = JSON.parse(data);
               if ( s.status >= 0 )
               {
-                window.location.replace("update.php?username="+$("#log-t").val());
+                window.location.replace("login.php?username="+$("#log-t").val());
               }
               else
               {
@@ -111,6 +111,7 @@
             }
           });
       });
+     
     });
     </script>
   </body>

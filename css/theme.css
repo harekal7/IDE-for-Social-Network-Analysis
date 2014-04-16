@@ -33,9 +33,16 @@ input#log{
   margin-left: 10%;
 }
 
+
+.jumbotron > button#sync  {
+	margin-top: 2%;
+	margin-left: 65%;
+	margin-right: 2%;	
+	width:10%;
+}
+
 .jumbotron > button#run  {
 	margin-top: 2%;
-	margin-left: 75%;
 	margin-right: 2%;	
 	width:10%;
 }
