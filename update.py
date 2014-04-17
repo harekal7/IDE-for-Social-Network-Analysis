@@ -19,16 +19,113 @@ def clear_graph_db(graph_db):
 #***********************************************************************************************************************
 
 def model_users_statuses_comments(db):
+	i = 0
 	cur1 = db.cursor() 
 	cur2 = db.cursor() 
 	cur3 = db.cursor()
 	cur4 = db.cursor() 
 	cur5 = db.cursor() 
+	cur_user_data_1 = db.cursor()
+	cur_user_data_2 = db.cursor()
+
 	cur1.execute("SELECT name, guid FROM elgg_users_entity")
 	for row1 in cur1.fetchall():
-			print unicode(row1[0], errors='ignore')
-			user, = graph_db.create({"name": unicode(row1[0], errors='ignore'), "guid":row1[1]})
+			
+			#Location
+			location = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 44");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							location = row_user_data_2[0]
+
+			#brief description
+			brief_desc = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 27");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							brief_desc = row_user_data_2[0]
+
+			#contact email
+			contact_email = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 409");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							contact_email = row_user_data_2[0]
+
+			#telephone
+			telephone = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 411");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							telephone = row_user_data_2[0]
+
+			#Mobile phone
+			mobile_phone = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 413");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							mobile_phone = row_user_data_2[0]
+
+
+			#website
+			website = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 63");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							website = row_user_data_2[0]
+
+
+			#about_me
+			about_me = ""
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 387");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							about_me = row_user_data_2[0]
+
+			#skills
+			skills = ["null"]
+			no = False
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 402");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							if no==False:
+								no=True
+								skills.pop()
+								skills.append(row_user_data_2[0])
+							else:
+								skills.append(row_user_data_2[0])
+
+
+			#interests
+			no = False
+			interests = ["null"]
+			cur_user_data_1.execute("SELECT value_id FROM  elgg_metadata WHERE owner_guid = "+str(row1[1])+" AND name_id = 29");
+			for row_user_data_1 in cur_user_data_1.fetchall():
+					cur_user_data_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_user_data_1[0]))
+					for row_user_data_2 in cur_user_data_2.fetchall():
+							if no==False:
+								no=True
+								interests.pop()
+								interests.append(row_user_data_2[0])
+							else:
+								interests.append(row_user_data_2[0])
+
+			i = i + 1
+			print i, unicode(row1[0], errors='ignore')
+			user, = graph_db.create({"name": unicode(row1[0], errors='ignore'), "guid":row1[1], "location":location,
+			 "brief_description":brief_desc, "contact_email":contact_email, "telephone":telephone,
+			 "mobile_phone":mobile_phone, "website":website, "about_me":about_me,
+			  "interests":interests, "skills":skills})
 			user.add_labels("User")
+			
 			cur2.execute("SELECT guid, time_updated FROM elgg_entities WHERE owner_guid="+str(row1[1])+" AND subtype=5")
 			for row2 in cur2.fetchall():
 				cur3.execute("SELECT description FROM elgg_objects_entity WHERE guid="+str(row2[0]))
@@ -48,7 +145,7 @@ def model_users_statuses_comments(db):
 										status.add_labels("Status")
 										query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r:Posted]->(b) RETURN r"
 										result = neo4j.CypherQuery(graph_db, query_string).execute()
-
+			
 #**********************************************************************************************************************
 
 def model_friends(db):
@@ -161,6 +258,6 @@ if __name__ == "__main__":
 	model_friends(db)
 	model_groups(db)
 	model_events(db)
-	model_pages(db)
+	model_pages(db)	
 
 #***********************************************************************************************************************
