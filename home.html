@@ -46,6 +46,21 @@
             <li class="active"><a href="home.html">Home</a></li>
             <li><a href="offline.html">Help</a></li>
             <li><a href="about.html">Documentation</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Example Apps <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="examples"><a id="1">Group Suggester</a></li>
+                <li class="examples"><a id="2">Friend Suggester</a></li>
+                <li class="examples"><a id="3">Most Popular Event</a></li>
+                <li class="examples"><a id="4">S/N Analyzer - User</a></li>
+                <li class="examples"><a id="5">S/N Analyzer - Admin</a></li>
+                <li class="examples"><a id="6">ESNAI</a></li>
+                <li class="examples"><a id="7">Seven</a></li>
+                <li class="examples"><a id="8">Eight</a></li>
+                <li class="examples"><a id="9">Nine</a></li>
+                <li class="examples"><a id="10">Ten</a></li>
+              </ul>
+            </li>
           </ul>
           <a href="logout.php"><button type="button" class="btn btn-lg btn-danger" id="button-right">Log Out</button></a>
         </div>
@@ -120,6 +135,19 @@
             success:function(data)
             {
               $("#out").html(data);
+            }
+          });
+        });
+
+        $(".examples").click(function(e){
+          editor.save();
+          $.ajax({
+            url:e.target.id+".py",
+            type:"GET",
+            dataType:"text",
+            success:function(data)
+            {
+              editor.getDoc().setValue(data);
             }
           });
         });

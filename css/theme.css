@@ -75,6 +75,11 @@ div#wrong
 
 #button-right
 {
-	height: 80%;
-	margin-left:56%;
+	height: 70%;
+	margin-left:50%;
+}
+
+.examples
+{
+	cursor:pointer;
 }
