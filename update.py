@@ -27,7 +27,8 @@ def model_users_statuses_comments(db):
 	cur5 = db.cursor() 
 	cur_user_data_1 = db.cursor()
 	cur_user_data_2 = db.cursor()
-	cur_tags = db.cursor()
+	cur_tags_1 = db.cursor()
+	cur_tags_2 = db.cursor()
 
 	cur1.execute("SELECT name, guid, last_login FROM elgg_users_entity")
 	for row1 in cur1.fetchall():
@@ -133,9 +134,9 @@ def model_users_statuses_comments(db):
 				#tags
 				tags = ["none"]
 				no = False
-				cur_tags_1.execute("SELECT value_id FROM elgg_metadata WHERE nameid=50 AND enitity_guid="+str(row2[0]))
+				cur_tags_1.execute("SELECT value_id FROM elgg_metadata WHERE name_id=50 AND entity_guid="+str(row2[0]))
 				for row_tags_1 in cur_tags_1.fetchall():
-					cur_tags_2.execute("SELECT string FROM elgg_metastring WHERE id="+str(row_tags_1[0]))
+					cur_tags_2.execute("SELECT string FROM elgg_metastrings WHERE id="+str(row_tags_1[0]))
 					for row_tags_2 in cur_tags_2.fetchall():
 						if no==False:
 								no=True
@@ -170,7 +171,7 @@ def model_friends(db):
 	cur1 = db.cursor() 
 	cur1.execute("SELECT guid_one, guid_two FROM elgg_entity_relationships WHERE relationship like 'friend'")
 	for row1 in cur1.fetchall():
-	    query_string = "MATCH (a:User),(b:User) WHERE a.guid ="+str(row1[0])+" AND b.guid = "+str(row1[1])+" CREATE (a)-[r:Friend]->(b) RETURN r"
+	    query_string = "MATCH (a:User),(b:User) WHERE a.guid ="+str(row1[0])+" AND b.guid = "+str(row1[1])+" CREATE (a)-[r1:Friend]->(b) CREATE (b)-[r2:Friend]->(a) RETURN r1, r2"
 	    result = neo4j.CypherQuery(graph_db, query_string).execute()
 
 #**********************************************************************************************************************
@@ -191,7 +192,8 @@ def model_groups(db):
 	for row1 in cur1.fetchall():
 
 			#tags
-			tags = []
+			no = False
+			tags = ["none"]
 			cur_tags_1.execute("SELECT value_id FROM  elgg_metadata WHERE entity_guid = "+str(row1[0])+" AND name_id = 29");
 			for row_tags_1 in cur_tags_1.fetchall():
 					cur_tags_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_tags_1[0]))
@@ -215,25 +217,25 @@ def model_groups(db):
 
 
 			#pages_enabled?
-			cur_tags_1.execute("SELECT entity_guid FROM  elgg_metadata WHERE entity_guid ="+str(row1[0])+" name_id = 37 AND value_id = 32");
+			cur_tags_1.execute("SELECT entity_guid FROM elgg_metadata WHERE entity_guid ="+str(row1[0])+" AND name_id = 37 AND value_id = 32")
 			for row_tags_1 in cur_tags_1.fetchall():
-					if entity_guid == str(row_tags_1[0]):
+					if row1[0] == str(row_tags_1[0]):
 						pages_enabled = "yes"
 					else:
 						pages_enabled = "no"
 
 			#blogs_enabled?
-			cur_tags_1.execute("SELECT entity_guid FROM  elgg_metadata WHERE entity_guid ="+str(row1[0])+" name_id = 31 AND value_id = 32");
+			cur_tags_1.execute("SELECT entity_guid FROM  elgg_metadata WHERE entity_guid ="+str(row1[0])+" AND name_id = 31 AND value_id = 32");
 			for row_tags_1 in cur_tags_1.fetchall():
-					if entity_guid == str(row_tags_1[0]):
+					if row1[0] == str(row_tags_1[0]):
 						blogs_enabled = "yes"
 					else:
 						blogs_enabled = "no"
 
 			#events_enabled?
-			cur_tags_1.execute("SELECT entity_guid FROM  elgg_metadata WHERE entity_guid ="+str(row1[0])+" name_id = 96 AND value_id = 32");
+			cur_tags_1.execute("SELECT entity_guid FROM  elgg_metadata WHERE entity_guid ="+str(row1[0])+" AND name_id = 96 AND value_id = 32");
 			for row_tags_1 in cur_tags_1.fetchall():
-					if entity_guid == str(row_tags_1[0]):
+					if row1[0] == str(row_tags_1[0]):
 						events_enabled = "yes"
 					else:
 						events_enabled = "no"
@@ -266,23 +268,149 @@ def model_events(db):
 	cur1 = db.cursor() 
 	cur2 = db.cursor() 
 	cur3 = db.cursor()
+	cur4 = db.cursor()
 
 	cur1.execute("SELECT guid , time_created, owner_guid FROM elgg_entities WHERE subtype = 7")
 	for row1 in cur1.fetchall():
-		query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Owns_event]->(b) CREATE (b)-[r2:Owner_event]->(a) RETURN r1, r2"
-		result = neo4j.CypherQuery(graph_db, query_string).execute()
-
-		cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
+		
+		#Location
+		location = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=44 AND entity_guid="+str(row1[0]))
 		for row2 in cur2.fetchall():
-			event, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1]})
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						location = row3[0]
+
+
+		#short_desc
+		short_desc = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=51 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						short_desc = row3[0]
+
+
+
+		#venue
+		venue = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=59 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						venue = row3[0]
+
+
+		#twitter_hash
+		twitter_hash = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=61 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						twitter_hash = row3[0]
+
+
+		#contact_details
+		contact_details = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=62 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						contact_details = row3[0]
+
+		#website
+		website = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=63 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						website = row3[0]
+
+
+		#fee
+		fee = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=65 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						fee = row3[0]
+
+
+
+		#start_day
+		start_day = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=66 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						start_day = row3[0]
+
+
+		#start_time
+		start_time = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=68 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						start_time = row3[0]
+
+		#end_registration_day
+		end_registration_day = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=71 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						end_registration_day = row3[0]
+
+
+		#organizer
+		organizer = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=64 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						organizer = row3[0]
+
+
+
+		#max_attendees
+		max_attendees = ""
+		cur2.execute("SELECT value_id FROM elgg_metadata WHERE name_id=58 AND entity_guid="+str(row1[0]))
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						max_attendees = row3[0]
+
+
+		#tags
+		no = False
+		tags = ["none"]
+		cur2.execute("SELECT value_id FROM  elgg_metadata WHERE entity_guid = "+str(row1[0])+" AND name_id = 50");
+		for row2 in cur2.fetchall():
+				cur3.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row2[0]))
+				for row3 in cur3.fetchall():
+						if no==False:
+							no=True
+							tags.pop()
+							tags.append(row3[0])
+						else:
+							tags.append(row3[0])
+
+
+		cur2.execute("SELECT title, description FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
+		for row2 in cur2.fetchall():
+			event, = graph_db.create({"title": row2[0], "guid":row1[0], "created_time": row1[1],
+				"location":location, "tags":tags, "short_desc":short_desc, "venue":venue,
+				 "max_attendees":max_attendees, "organizer":organizer,
+				  "end_registration_day":end_registration_day, "start_time":start_time, "start_day":start_day,
+				  "fee":fee, "website":website, "contact_details":contact_details, "venue":venue,
+				  "twitter_hash":twitter_hash, "description":row2[1]})
 			event.add_labels("Event")
 			cur3.execute("SELECT guid_two FROM elgg_entity_relationships WHERE guid_one = "+str(row1[0])+" ")
 			for row3 in cur3.fetchall():
 				query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Attends]->(b) CREATE (b)-[r2:Attendees]->(a) RETURN r1, r2"
 				result = neo4j.CypherQuery(graph_db, query_string).execute()
 
-	cur1.execute("SELECT guid , time_created, owner_guid FROM elgg_entities WHERE subtype = 7")
-	for row1 in cur1.fetchall():
 		query_string = "MATCH (a:User),(b:Event) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Owns_event]->(b) CREATE (b)-[r2:Owner_event]->(a) RETURN r1, r2"
 		result = neo4j.CypherQuery(graph_db, query_string).execute()
 
@@ -301,6 +429,8 @@ def model_pages(db):
 	cur3 = db.cursor()
 	cur4 = db.cursor()
 	cur5 = db.cursor()
+	cur_tags_1 = db.cursor()
+	cur_tags_2 = db.cursor()
 
 	cur1.execute("SELECT guid , time_created FROM elgg_entities WHERE subtype = 14")
 	for row1 in cur1.fetchall():
@@ -310,13 +440,14 @@ def model_pages(db):
 			text = ""
 			cur4.execute("SELECT value_id FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 102 AND value_id <> 11")
 			for row4 in cur4.fetchall():
-					cur5.execute("SELECT string FROM elgg_metastring WHERE id = "+str(row4[0]))
+					cur5.execute("SELECT string FROM elgg_metastrings WHERE id = "+str(row4[0]))
 					for row5 in cur5.fetchall():
 							text = row5[0]
 
 
 			#tags
-			tags = []
+			no = False
+			tags = ["none"]
 			cur_tags_1.execute("SELECT value_id FROM  elgg_metadata WHERE entity_guid = "+str(row1[0])+" AND name_id = 50");
 			for row_tags_1 in cur_tags_1.fetchall():
 					cur_tags_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_tags_1[0]))
@@ -330,26 +461,26 @@ def model_pages(db):
 
 
 
+			#container_group
+			cur_tags_1.execute("SELECT container_guid FROM  elgg_entities WHERE guid = "+str(row1[0]))
+			for row_tags_1 in cur_tags_1.fetchall():
+					container_group = row_tags_1[0]
 
 
-	    cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
-	    for row2 in cur2.fetchall():
-	        page, = graph_db.create({"title": row2[0], "guid":row1[0], "created_time": row1[1],
-	        	"text":text, "tags":tags})
-	        page.add_labels("Page")
-	        cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
-	        for row3 in cur3.fetchall():
-	            # create a relationship user -> likes -> page
-	            #  create a relationship Page -> liked_by -> user
-	            query_string = "MATCH (a:User),(b:Page) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
-	            result = neo4j.CypherQuery(graph_db, query_string).execute()
-
-	        cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 102")
-	        for row3 in cur3.fetchall():
-	            # create a relationship user -> creates -> page
-	            # create a relationship Page -> created_by -> user
-	            query_string = "MATCH (a:User),(b:Page) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Creates]->(b) CREATE (b)-[r2:Created_by]->(a) RETURN r1, r2"
-	            result = neo4j.CypherQuery(graph_db, query_string).execute()
+			cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0]))
+			for row2 in cur2.fetchall():
+					page, = graph_db.create({"title": row2[0], "guid":row1[0], "created_time": row1[1],
+	        	"text":text, "tags":tags, "container_group":container_group})
+					page.add_labels("Page")
+					cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
+					for row3 in cur3.fetchall():
+							query_string = "MATCH (a:User),(b:Page) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
+							result = neo4j.CypherQuery(graph_db, query_string).execute()
+					
+					cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 102")
+					for row3 in cur3.fetchall():
+							query_string = "MATCH (a:User),(b:Page) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Creates]->(b) CREATE (b)-[r2:Created_by]->(a) RETURN r1, r2"
+							result = neo4j.CypherQuery(graph_db, query_string).execute()
 
 
 #***********************************************************************************************************************
@@ -364,38 +495,71 @@ def model_pages(db):
 #6. Create a bidirectional relationship as user commented on  blog.
 #7  Also create a bidirectional relationship user -> creates -> blog.
 
-def model_blogs(cur1, cur2, cur3):
+def model_blogs(db):
+	cur1 = db.cursor() 
+	cur2 = db.cursor() 
+	cur3 = db.cursor()
+	cur_tags_1 = db.cursor()
+	cur_tags_2 = db.cursor()
 	cur1.execute("SELECT guid , time_created , owner_guid FROM elgg_entities WHERE subtype = 4")
 	for row1 in cur1.fetchall():
 		
-		cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
-		for row2 in cur2.fetchall():
-			blog, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1]})
-			blog.add_labels("Blog")
-			cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 17")
-			for row3 in cur3.fetchall():
+			#tags
+			tags = ["none"]
+			no = False
+			cur_tags_1.execute("SELECT value_id FROM  elgg_metadata WHERE entity_guid = "+str(row1[0])+" AND name_id = 50");
+			for row_tags_1 in cur_tags_1.fetchall():
+					cur_tags_2.execute("SELECT string FROM  elgg_metastrings WHERE id = "+str(row_tags_1[0]))
+					for row_tags_2 in cur_tags_2.fetchall():
+							if no==False:
+								no=True
+								tags.pop()
+								tags.append(row_tags_2[0])
+							else:
+								tags.append(row_tags_2[0])
 
-				#blog
-				query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
-				result = neo4j.CypherQuery(graph_db, query_string).execute()
 
-        cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
-        for row3 in cur3.fetchall():
-            query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:comments]->(b) CREATE (b)-[r2:has_comment]->(a) RETURN r1, r2"
-            result = neo4j.CypherQuery(graph_db, query_string).execute()
+			#container_group
+			cur_tags_1.execute("SELECT container_guid FROM  elgg_entities WHERE guid = "+str(row1[0]));
+			for row_tags_1 in cur_tags_1.fetchall():
+					container_group = row_tags_1[0]
 
-    #Blog creator
-		query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:creates]->(b) CREATE (b)-[r2:created_by]->(a) RETURN r1, r2"
-		result = neo4j.CypherQuery(graph_db, query_string).execute()    
+
+			cur2.execute("SELECT title, description FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
+			for row2 in cur2.fetchall():
+				blog, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1],
+					"description":row2[1], "tags":tags, "container_group":container_group})
+				blog.add_labels("Blog")
+				cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 17")
+				for row3 in cur3.fetchall():
+
+					#blog
+					query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
+					result = neo4j.CypherQuery(graph_db, query_string).execute()
+					
+					cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
+					for row3 in cur3.fetchall():
+							query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:comments]->(b) CREATE (b)-[r2:has_comment]->(a) RETURN r1, r2"
+							result = neo4j.CypherQuery(graph_db, query_string).execute()
+
+			query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:creates]->(b) CREATE (b)-[r2:created_by]->(a) RETURN r1, r2"
+			result = neo4j.CypherQuery(graph_db, query_string).execute()    
 
 #***********************************************************************************************************************
 if __name__ == "__main__":
 	graph_db, db = init("localhost", "root", "", "elgg", "http://localhost:7474/db/data/")
 	clear_graph_db(graph_db)
+	print "model_users_statuses_comments"
 	model_users_statuses_comments(db)
+	print "model_friends"
 	model_friends(db)
+	print "model_groups"
 	model_groups(db)
+	print "model_events"
 	model_events(db)
+	print "model_pages"
 	model_pages(db)	
+	print "model_blogs"
+	model_blogs(db)
 
 #***********************************************************************************************************************
