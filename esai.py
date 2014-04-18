@@ -1,3 +1,3 @@
 import snaide
-for event in snaide.get_events_owned_by("esai", None):
-  print event["name"]
+
+print snaide.get_event_title(59558)
