@@ -251,6 +251,42 @@ def model_pages(db):
 
 #***********************************************************************************************************************
 
+
+#Blogs:
+#1. Get guid from elgg_entities table with subtype value = 4
+#2. Use this guid to get name of the Blog from elgg_objects_entity table
+#3. Get the id's of people who have liked this blog  from elgg_annotations table searching for guid and name_id = 17.
+#4. Create a bidirectional relationship as user likes blog.
+#5. Get the id's of people who have commented on this blog  from elgg_annotations table searching for guid and name_id = 16.
+#6. Create a bidirectional relationship as user commented on  blog.
+#7  Also create a bidirectional relationship user -> creates -> blog.
+
+def model_blogs(cur1, cur2, cur3):
+	cur1.execute("SELECT guid , time_created , owner_guid FROM elgg_entities WHERE subtype = 4")
+	for row1 in cur1.fetchall():
+    cur2.execute("SELECT title FROM elgg_objects_entity WHERE guid = "+str(row1[0])+" ")
+    for row2 in cur2.fetchall():
+        blog, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1]})
+        blog.add_labels("Blog")
+        cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 17")
+        for row3 in cur3.fetchall():
+            # create a relationship user -> likes -> blog
+            #  create a relationship blog -> liked_by -> user
+            query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
+            result = neo4j.CypherQuery(graph_db, query_string).execute()
+
+        cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
+        for row3 in cur3.fetchall():
+            # create a relationship user -> comments -> page
+            # create a relationship Page -> has_comment -> user
+            query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:comments]->(b) CREATE (b)-[r2:has_comment]->(a) RETURN r1, r2"
+            result = neo4j.CypherQuery(graph_db, query_string).execute()
+
+
+	query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row1[2])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:creates]->(b) CREATE (b)-[r2:created_by]->(a) RETURN r1, r2"
+	result = neo4j.CypherQuery(graph_db, query_string).execute()    
+
+#***********************************************************************************************************************
 if __name__ == "__main__":
 	graph_db, db = init("localhost", "root", "", "elgg", "http://localhost:7474/db/data/")
 	clear_graph_db(graph_db)
