@@ -194,3 +194,168 @@ def get_event_tags(event_name, event_guid):
 	return _snaide._get_event_tags(graph_db, event_name, event_guid)
 
 #***********************************************************************************************************************
+def get_all_pages():
+	global graph_db
+	return _snaide._get_all_pages(graph_db)
+
+#***********************************************************************************************************************
+def get_page_likes_count (page_name, page_guid):
+	global graph_db
+	return _snaide._get_page_likes_count(graph_db, page_name, page_guid)
+
+#***********************************************************************************************************************
+def get_pages_created_by (user_name, user_guid):
+	global graph_db
+	return _snaide._get_pages_created_by(graph_db, user_name, user_guid)
+#***********************************************************************************************************************
+
+def get_pages_liked_by (user_name, user_guid):
+	global graph_db
+	return _snaide._get_pages_liked_by(graph_db, user_name, user_guid)
+#***********************************************************************************************************************
+
+def get_page_title (page_guid):
+	global graph_db
+	return _snaide._get_page_title(graph_db, page_guid)
+
+#***********************************************************************************************************************
+
+def get_page_created_date (page_name, page_guid):
+	global graph_db
+	return _snaide._get_page_created_date(graph_db, page_name, page_guid)
+
+#***********************************************************************************************************************
+
+def get_page_content(page_name, page_guid):
+	global graph_db
+	return _snaide._get_page_content(graph_db, page_name, page_guid)
+
+#***********************************************************************************************************************
+
+def get_page_tags(page_name, page_guid):
+	global graph_db
+	return _snaide._get_page_tags(graph_db, page_name, page_guid)
+
+#***********************************************************************************************************************
+
+def get_page_container_group(page_name, page_guid):
+	global graph_db
+	return _snaide._get_page_container_group(graph_db, page_name, page_guid)
+
+#***********************************************************************************************************************
+
+def get_group_members(group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_members(graph_db, group_name, group_guid) 	
+
+#***********************************************************************************************************************
+def get_group_members_count(group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_members_count(graph_db, group_name, group_guid)
+
+#***********************************************************************************************************************
+
+def get_groups_owned_by (user_name, user_guid):
+	global graph_db
+	return _snaide._get_groups_owned_by(graph_db, user_name, user_guid)
+
+#***********************************************************************************************************************
+
+def get_group_owner (group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_owner(graph_db, group_name, group_guid)
+	
+#***********************************************************************************************************************
+
+def get_group_name(group_guid):
+	global graph_db
+	return _snaide._get_group_name(graph_db, group_guid)
+
+#***********************************************************************************************************************
+
+def get_group_description(group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_description(graph_db, group_name, group_guid)
+	
+#***********************************************************************************************************************
+
+def get_group_brief_description(group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_brief_description(graph_db, group_name, group_guid)
+
+#***********************************************************************************************************************
+
+def is_events_enabled_in_group(group_name, group_guid):
+	global graph_db
+	return _snaide._is_events_enabled_in_group(graph_db, group_name, group_guid)
+
+#***********************************************************************************************************************
+
+def is_blogs_enabled_in_group(group_name, group_guid):
+	global graph_db
+	return _snaide._is_blogs_enabled_in_group(graph_db, group_name, group_guid)
+
+#***********************************************************************************************************************
+
+def is_pages_enabled_in_group(group_name, group_guid):
+	global graph_db
+	return _snaide._is_pages_enabled_in_group(graph_db, group_name, group_guid)
+
+#***********************************************************************************************************************
+
+def get_blog_likers (blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_likers(graph_db, blog_name, blog_guid)
+
+#***********************************************************************************************************************
+
+def get_blog_commentators (blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_commentators(graph_db, blog_name, blog_guid)	
+
+#***********************************************************************************************************************
+
+def get_blog_name (blog_guid):
+	global graph_db
+	return _snaide._get_blog_name(graph_db, blog_guid)		
+	
+
+#***********************************************************************************************************************
+
+def get_blog_description(blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_description(graph_db, blog_name, blog_guid)		
+	
+#***********************************************************************************************************************
+
+def get_blog_tags(blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_tags(graph_db, blog_name, blog_guid)		
+	
+
+#***********************************************************************************************************************
+
+def get_blog_created_time(blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_created_time(graph_db, blog_name, blog_guid)		
+	
+#***********************************************************************************************************************
+
+
+def get_blogs_by_user (user_name, user_guid):
+	global graph_db
+	return _snaide._get_blogs_by_user(graph_db, user_name, user_guid)		
+
+#***********************************************************************************************************************
+
+def get_blog_likers_count (blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_likers_count(graph_db, blog_name, blog_guid)		
+
+#***********************************************************************************************************************
+
+def get_blog_commentator_count (blog_name, blog_guid):
+	global graph_db
+	return _snaide._get_blog_commentator_count(graph_db, blog_name, blog_guid)		
+
+#***********************************************************************************************************************

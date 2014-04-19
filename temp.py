@@ -1,4 +1,4 @@
 import snaide
 
-for page in snaide.get_all_pages():
-  print page["name"]
+
+print snaide.get_page_likes_count("48658", None)

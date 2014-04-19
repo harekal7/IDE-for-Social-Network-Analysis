@@ -1,3 +1,3 @@
 import snaide
-for user in snaide.get_all_users():
-  print user["name"]
+
+print snaide.get_blog_commentators(None, 59149)
