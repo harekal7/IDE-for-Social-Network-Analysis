@@ -128,6 +128,7 @@ def model_users_statuses_comments(db):
 			  "interests":interests, "skills":skills, "last_login":row1[2]})
 			user.add_labels("User")
 			
+			
 			cur2.execute("SELECT guid, time_updated FROM elgg_entities WHERE owner_guid="+str(row1[1])+" AND subtype=5")
 			for row2 in cur2.fetchall():
 				
@@ -164,7 +165,7 @@ def model_users_statuses_comments(db):
 										status.add_labels("Status")
 										query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r:Posted]->(b) RETURN r"
 										result = neo4j.CypherQuery(graph_db, query_string).execute()
-			
+
 #**********************************************************************************************************************
 
 def model_friends(db):
@@ -530,7 +531,7 @@ def model_blogs(db):
 				blog, = graph_db.create({"name": row2[0], "guid":row1[0], "created_time": row1[1],
 					"description":row2[1], "tags":tags, "container_group":container_group})
 				blog.add_labels("Blog")
-				print row2[0]
+				#print row2[0]
 				cur3.execute("SELECT  owner_guid FROM elgg_annotations WHERE entity_guid = "+str(row1[0])+" AND name_id = 16")
 				for row3 in cur3.fetchall():
 					query_string = "MATCH (a:User),(b:Blog) WHERE a.guid ="+str(row3[0])+" AND b.guid = "+str(row1[0])+" CREATE (a)-[r1:Likes]->(b) CREATE (b)-[r2:Liked_by]->(a) RETURN r1, r2"
@@ -548,17 +549,17 @@ def model_blogs(db):
 #***********************************************************************************************************************
 if __name__ == "__main__":
 	graph_db, db = init("localhost", "root", "", "elgg", "http://localhost:7474/db/data/")
-	#clear_graph_db(graph_db)
-	#print "model_users_statuses_comments"
-	#model_users_statuses_comments(db)
-	#print "model_friends"
-	#model_friends(db)
-	#print "model_groups"
-	#model_groups(db)
-	#print "model_events"
-	#model_events(db)
-	#print "model_pages"
-	#model_pages(db)	
+	clear_graph_db(graph_db)
+	print "model_users_statuses_comments"
+	model_users_statuses_comments(db)
+	print "model_friends"
+	model_friends(db)
+	print "model_groups"
+	model_groups(db)
+	print "model_events"
+	model_events(db)
+	print "model_pages"
+	model_pages(db)	
 	print "model_blogs"
 	model_blogs(db)
 

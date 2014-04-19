@@ -341,7 +341,6 @@ def get_blog_created_time(blog_name, blog_guid):
 	
 #***********************************************************************************************************************
 
-
 def get_blogs_by_user (user_name, user_guid):
 	global graph_db
 	return _snaide._get_blogs_by_user(graph_db, user_name, user_guid)		
@@ -359,3 +358,214 @@ def get_blog_commentator_count (blog_name, blog_guid):
 	return _snaide._get_blog_commentator_count(graph_db, blog_name, blog_guid)		
 
 #***********************************************************************************************************************
+
+def get_all_users():
+	global graph_db
+	return _snaide._get_all_users(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_all_users_count():
+	global graph_db
+	return _snaide._get_all_users_count(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_user_name(user_guid):
+	global graph_db
+	return _snaide._get_user_name(graph_db, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_location (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_location(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_brief_description (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_brief_description(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_contact_email (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_contact_email(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_telephone (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_telephone(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_mobile_phone (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_mobile_phone(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_user_website (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_website(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+def get_user_interests (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_interests(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+def get_user_skills (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_skills(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+def get_user_last_login (user_name, user_guid):
+	global graph_db
+	return _snaide._get_user_last_login(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+def get_statuses_by(user_name, user_guid):
+	global graph_db
+	return _snaide._get_statuses_by(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+def get_all_statuses():
+	global graph_db
+	return _snaide._get_all_statuses(graph_db)	
+
+
+#***********************************************************************************************************************
+
+def get_all_statuses_count():
+	global graph_db
+	return _snaide._get_all_statuses_count(graph_db)	
+
+
+#***********************************************************************************************************************
+
+def get_all_comments_count():
+	global graph_db
+	return _snaide._get_all_comments_count(graph_db)	
+
+
+#***********************************************************************************************************************
+
+def get_all_events_count():
+	global graph_db
+	return _snaide._get_all_events_count(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_all_pages_count():
+	global graph_db
+	return _snaide._get_all_pages_count(graph_db)	
+
+
+#***********************************************************************************************************************
+
+def get_all_blogs_count():
+	global graph_db
+	return _snaide._get_all_blogs_count(graph_db)	
+
+
+#***********************************************************************************************************************
+
+def get_all_groups_count():
+	global graph_db
+	return _snaide._get_all_groups_count(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_all_status_likes_count():
+	global graph_db
+	return _snaide._get_all_status_likes_count(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_all_friends(user_name, user_guid):
+	global graph_db
+	return _snaide._get_all_friends(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_all_friends_count(user_name, user_guid):
+	global graph_db
+	return _snaide._get_all_friends_count(graph_db, user_name, user_guid)	
+
+
+#***********************************************************************************************************************
+
+
+def get_comments_by(user_name, user_guid):
+	global graph_db
+	return _snaide._get_comments_by(graph_db, user_name, user_guid)	
+
+#***********************************************************************************************************************
+
+def get_group_owner (group_name, group_guid):
+	global graph_db
+	return _snaide._get_group_owner(graph_db, group_name, group_guid)	
+
+#***********************************************************************************************************************
+
+def is_friend (user1_id, user2_id):
+	global graph_db
+	return _snaide._is_friend(graph_db, user1_id, user2_id)	
+
+#***********************************************************************************************************************
+
+def is_user_member_of_group (user_id, group_id):
+	global graph_db
+	return _snaide._is_user_member_of_group(graph_db, user_id, group_id)	
+
+
+#***********************************************************************************************************************
+
+def groups_with_user_as_member (user_name, user_guid):
+	global graph_db
+	return _snaide._groups_with_user_as_member(graph_db, user_name, user_guid)	
+	
+
+#**********************************************************************************************************************
+
+
+def get_all_blogs():
+	global graph_db
+	return _snaide._get_all_blogs(graph_db)	
+
+#***********************************************************************************************************************
+
+def get_statuses_count_by(user_name, user_guid):
+	global graph_db
+	return _snaide._get_statuses_count_by(graph_db, user_name, user_guid)		
+
+#***********************************************************************************************************************
+
+def get_likes_on_single_status (status_id):
+	global graph_db
+	return _snaide._get_likes_on_single_status(graph_db, status_id)
+
+#***********************************************************************************************************************
+
+def get_events_attended_by(user_name, user_guid):
+	global graph_db
+	return _snaide._get_events_attended_by(graph_db, user_name, user_guid)
+
+#***********************************************************************************************************************
+
+def get_all_groups():
+	global graph_db
+	return _snaide._get_all_groups(graph_db)

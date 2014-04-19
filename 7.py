@@ -1,1 +1,13 @@
-7
+import snaide
+
+blogs = snaide.get_all_blogs()
+
+coverage = 0
+
+for i in blogs:
+	tags_count = len(snaide.get_blog_tags(None, i["guid"]))
+	if coverage < tags_count:
+		coverage = tags_count
+		blog = i["guid"]
+		
+print "Blog with highest domain coverage : "+str(snaide.get_blog_name(blog))

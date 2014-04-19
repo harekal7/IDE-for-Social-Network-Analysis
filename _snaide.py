@@ -80,7 +80,7 @@ def _get_events_owned_by(graph_db,user_name, user_guid):
 
 #***********************************************************************************************************************
 
-def _get_one_event (graph_db,event_name, event_guid):
+def _get_one_event (graph_db, event_name, event_guid):
 	# get all the users attending the event
 	# get the time of event
 	if event_name != None and event_guid != None :
@@ -110,6 +110,7 @@ def _get_statuses_by(graph_db,user_name, user_guid):
 	ret = []
 	if data:
 		for row in data:
+			print row
 			ret.append({"status_id" : row[0]["status_id"], "message" : str(row[0]["message"]) })
 
 	return ret
@@ -143,7 +144,7 @@ def _get_group_members(graph_db, group_name, group_guid):
 	ret = []
 	if data:
 		for row in data:
-			ret.append({"id" : row[0]["guid"], "name" : str(row[0]["name"]) })
+			ret.append({"guid" : row[0]["guid"], "name" : str(row[0]["name"]) })
 
 	return ret
 
@@ -454,7 +455,7 @@ def _get_event_venue(graph_db, event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  "event_venue" : row[0]["venue"] }
+			ret =  {"event_venue" : row[0]["venue"] }
 	else:
 		ret =  "\n No Event/venue available.\n"
 
@@ -492,7 +493,7 @@ def _get_event_website(graph_db, event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  "event_website" : row[0]["website"] }
+			ret =  {"event_website" : row[0]["website"] }
 	else:
 		ret = "\n No Event/website available.\n"
 
@@ -511,7 +512,7 @@ def _get_event_twitter_hash(graph_db, event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  "event_twitter_hash" : row[0]["twitter_hash"] }
+			ret =  {"event_twitter_hash" : row[0]["twitter_hash"] }
 	else:
 		ret =  "\n No Event/twitter hash available.\n"
 
@@ -565,8 +566,9 @@ def _get_all_pages(graph_db):
 	query = "MATCH (n:Page) RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
+		ret = []
 		for row in data:
-			ret.append({"id":row[0]["guid"], "name":row[0]["title"]})
+			ret.append({"guid":row[0]["guid"], "name":row[0]["title"]})
 	else:
 		ret =  "No Pages Found"
 
@@ -618,7 +620,7 @@ def _get_pages_liked_by (graph_db, user_name, user_guid):
 	if data:
 		ret = []
 		for row in data:
-			ret.append({"page_name":row[0]["title"], "page_id":row[0]["guid"]})
+			ret.append({"page_name":row[0]["title"], "guid":row[0]["guid"]})
 	else:
 		ret =  "\nPage not found.\n"
 
@@ -653,7 +655,7 @@ def _get_page_created_date (graph_db,page_name, page_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  {"date" : time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"])) {}
+			ret =  {"date" : time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"])) }
 	else:
 		ret =  "\nPage not found.\n"
 
@@ -664,9 +666,9 @@ def _get_page_created_date (graph_db,page_name, page_guid):
 def _get_page_content(graph_db, page_name, page_guid):
 	# returns the brief description about the page
 	if page_name != None and page_guid != None :
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
 	elif page_name == None:
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+"  RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+"  RETURN n"
 	else:
 		query = "MATCH (n:Page) WHERE n.title = "+"'"+str(page_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
@@ -684,19 +686,17 @@ def _get_page_content(graph_db, page_name, page_guid):
 def _get_page_tags(graph_db, page_name, page_guid):
 	# returns the brief description about the page
 	if page_name != None and page_guid != None :
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
 	elif page_name == None:
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+"  RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+"  RETURN n"
 	else:
 		query = "MATCH (n:Page) WHERE n.title = "+"'"+str(page_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
+	ret = []
 	if data:
-		ret = []
 		for row in data:
 			#for tag in row[0]["tags"]:
 			ret =  row[0]["tags"]
-	else:
-		ret =  "\nTags not found.\n"
 
 	return ret
 
@@ -706,9 +706,9 @@ def _get_page_tags(graph_db, page_name, page_guid):
 def _get_page_container_group(graph_db, page_name, page_guid):
 	# returns the brief description about the page
 	if page_name != None and page_guid != None :
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+" and n.title = "+"'"+str(page_name)+"' RETURN n"
 	elif page_name == None:
-		query = "MATCH (n:Page) WHERE n.page_id = "+str(page_guid)+"  RETURN n"
+		query = "MATCH (n:Page) WHERE n.guid = "+str(page_guid)+"  RETURN n"
 	else:
 		query = "MATCH (n:Page) WHERE n.title = "+"'"+str(page_name)+"'"+" RETURN n"
 	data, metadata = cypher.execute(graph_db, query)
@@ -716,7 +716,7 @@ def _get_page_container_group(graph_db, page_name, page_guid):
 		for row in data:
 			ret = {"container_group" :row[0]["container_group"]}
 	else:
-		ret "\n No page/container_group available.\n"
+		ret = "\n No page/container_group available.\n"
 
 	return ret
 
@@ -733,7 +733,7 @@ def _get_group_members(graph_db, group_name, group_guid):
 	if data:
 		ret = []
 		for row in data:
-			ret.append({"name":row[0]["name"], "id":row[0]["guid"]})
+			ret.append({"name":row[0]["name"], "guid":row[0]["guid"]})
 	else:
 		ret =  "\nUser not found.\n"
 
@@ -1073,5 +1073,549 @@ def  _get_blog_commentator_count (graph_db, blog_name, blog_guid):
 		return len(data)
 	else:
 		return 0
+
+#***********************************************************************************************************************
+
+def _get_all_users(graph_db):
+	query = "MATCH (n:User) RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nID : "+str(row[0]["guid"])
+			print "Name : "+str(row[0]["name"])
+		print
+		print "\nYour Social Network has "+str(len(data))+" Users"
+	else:
+		print "No users found"
+
+#***********************************************************************************************************************
+
+def _get_all_users_count(graph_db):
+	query = "MATCH (n:User) RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+		print
+	else:
+		print "No Users found"
+		return 0
+
+#***********************************************************************************************************************
+
+def _get_user_name(graph_db, user_guid):
+	if user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "User Name : "+str(row[0]["name"])
+		print
+	else:
+		print "\nUser not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_location (graph_db, user_name, user_guid):
+	# returns the location of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser location : "+str(row[0]["location"])
+		print
+	else:
+		print "\nUser not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_brief_description (graph_db, user_name, user_guid):
+	# returns the location of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser brief description : "+str(row[0]["brief_desc"])
+		print
+	else:
+		print "\nUser/brief_desc not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_contact_email (graph_db, user_name, user_guid):
+	# returns the contact email of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser contact email : "+str(row[0]["contact_email"])
+		print
+	else:
+		print "\nUser/contact_email not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_telephone (graph_db, user_name, user_guid):
+	# returns the telephone of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser telephone : "+str(row[0]["telephone"])
+		print
+	else:
+		print "\nUser/telephone not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_mobile_phone (graph_db, user_name, user_guid):
+	# returns the mobile phone of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser mobile_phone : "+str(row[0]["mobile_phone"])
+		print
+	else:
+		print "\nUser/mobile_phone not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_website (graph_db, user_name, user_guid):
+	# returns the website of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nUser website : "+str(row[0]["website"])
+		print
+	else:
+		print "\nUser/website not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_interests (graph_db, user_name, user_guid):
+	# returns the location of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			for interest in row[0]["interests"]:
+				print "\ninterest:"+interest
+		print
+	else:
+		print "\nUser/interests not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_skills (graph_db, user_name, user_guid):
+	# returns the location of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			for skill in row[0]["skills"]:
+				print "\nskill:"+interest
+		print
+	else:
+		print "\nUser/skills not found.\n"
+
+#***********************************************************************************************************************
+
+def _get_user_last_login (graph_db, user_name, user_guid):
+	# returns the location of the user.
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN n"
+	elif user_name == None:
+		query = "MATCH (n:User) WHERE n.guid = "+str(user_guid)+"  RETURN n"
+	else:
+		query = "MATCH (n:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nuser last login:"+str(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["last_login"])))
+		print
+	else:
+		print "\nUser/interests not found.\n"
+
+#***********************************************************************************************************************
+
+
+def _get_statuses_by(graph_db,user_name, user_guid):
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	ret = []
+	if data:
+		for row in data:
+			ret.append({"guid":row[0]["status_id"]})
+
+	return ret
+
+#***********************************************************************************************************************
+
+def _get_all_statuses(graph_db):
+	#returns all the statuses in the social networking site
+	query = "MATCH (m:Status) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			print "\nStatus : "+str(row[0]["message"])
+			print "Status Id : "+str(row[0]["status_id"])
+		print
+	else:
+		print "\nStatus not found.\n"
+
+
+#***********************************************************************************************************************
+
+def _get_all_statuses_count(graph_db):
+	#returns all the count of all statuses in the social networking site
+	query = "MATCH (m:Status) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nStatus not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_comments_count(graph_db):
+	#returns  the count of all comments in the social networking site
+	query = "MATCH (m:Comment) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nComments not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_events_count(graph_db):
+	#returns  the count of all events in the social networking site
+	query = "MATCH (m:Event) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nEvents not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_pages_count(graph_db):
+	#returns  the count of all pages in the social networking site
+	query = "MATCH (m:Page) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nPages not found.\n"
+		return 0
+
+#***********************************************************************************************************************
+
+def _get_all_events_count(graph_db):
+	#returns  the count of all pages in the social networking site
+	query = "MATCH (m:Event ) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nEvents not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_blogs_count(graph_db):
+	#returns  the count of all blogs in the social networking site
+	query = "MATCH (m:Blog) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\Blogs not found.\n"
+		return 0
+
+#***********************************************************************************************************************
+
+def _get_all_blogs(graph_db):
+	#returns  the count of all blogs in the social networking site
+	query = "MATCH (m:Blog) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	ret = []
+	if data:
+		for row in data:
+			ret.append({"guid":row[0]["guid"]})
+	
+	return ret
+
+#***********************************************************************************************************************
+
+def _get_all_groups(graph_db):
+	#returns  the count of all blogs in the social networking site
+	query = "MATCH (m:Group) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	ret = []
+	if data:
+		for row in data:
+			ret.append({"guid":row[0]["group_id"]})
+	
+	return ret
+
+
+
+#***********************************************************************************************************************
+
+def _get_all_groups_count(graph_db):
+	#returns  the count of all groups in the social networking site
+	query = "MATCH (m:Group) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+	else:
+		print "\nGroups not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_status_likes_count(graph_db):
+	#returns  the count of likes on all the statuses in the social networking site
+	query = "MATCH (m:Status) RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	likes_count = 0
+	if data:
+		for row in data:
+			likes_count = likes_count + row[0]["likes"]
+		return likes_count
+	else:
+		print "\nStatuses not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_all_friends(graph_db, user_name, user_guid):
+	# returns  friends of a user on social network
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		ret = []
+		for row in data:
+			ret.append({"friend_name":row[0]["name"], "guid":row[0]["guid"]})
+	else:
+		ret = "\nuser/Friends not found.\n"
+
+	return ret
+
+
+#***********************************************************************************************************************
+
+def _get_all_friends_count(graph_db, user_name, user_guid):
+	# returns # of friends of a user on social network
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+		print
+	else:
+		print "\nuser/Friends not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+
+def _get_comments_by(graph_db, user_name, user_guid):
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:comments]-> (m:Comment) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:comments]-> (m:Comment) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:comments]-> (m:Comment) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		ret = []
+		for row in data:
+			ret.append({"comment":row[0]["message"], "id":row[0]["comment_id"]})
+	else:
+		ret =  "\nComment not found.\n"
+
+	return ret
+
+#***********************************************************************************************************************
+
+def _get_group_owner (graph_db, group_name, group_guid):
+	# get the owner of the group
+	
+	if group_name != None and group_guid != None :
+		query = "MATCH (m:User)-[:Owns]-> (n:Group) WHERE n.group_id = "+str(group_guid)+" and n.name = "+"'"+str(group_name)+"' RETURN m"
+	elif group_name == None:
+		query = "MATCH (m:User)-[:Owns]-> (n:Group) WHERE n.group_id = "+str(group_guid)+"  RETURN m"
+	else:
+		query = "MATCH (m:User)-[:Owns]-> (n:Group) WHERE n.name = "+"'"+str(group_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			ret = {"user_id":row[0]["guid"]}
+	else:
+		ret =  "\nOwner not found.\n"
+
+	return ret
+
+#***********************************************************************************************************************
+
+def _is_friend (graph_db, user1_id, user2_id):
+	if user1_id != None and user2_id != None :
+		query = "MATCH (n:User)-[:Friend]-> (m:User) WHERE n.guid = "+str(user1_id)+" and  m.guid = "+str(user2_id)+" RETURN n"
+		data, metadata = cypher.execute(graph_db, query)
+		if data:
+			return True
+		else:
+			return False
+#***********************************************************************************************************************
+
+def _is_user_member_of_group (graph_db, user_id, group_id):
+	# checks if the user is a member of the group
+	if user_id != None and group_id != None :
+		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.guid = "+str(user_id)+" and  m.group_id = "+str(group_id)+" RETURN m"	
+		data, metadata = cypher.execute(graph_db, query)
+		if data:
+			return True
+		else:
+			return False
+
+#***********************************************************************************************************************
+
+def _groups_with_user_as_member (graph_db, user_name, user_guid):
+	#returns all the groups in which user is a member
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		ret = []
+		for row in data:
+			#print row[0]["name"]
+			#print row[0]["group_id"]
+			ret.append({"group_name": row[0]["name"], "group_id":row[0]["group_id"]})
+	else:
+		ret = "user/group not found."
+
+	return ret
+
+#***********************************************************************************************************************
+
+def _get_statuses_count_by(graph_db,user_name, user_guid):
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		return len(data)
+		print
+	else:
+		print "\nStatus not found.\n"
+		return 0
+
+
+#***********************************************************************************************************************
+
+def _get_likes_on_single_status (graph_db, status_id):
+	if status_id != None:
+		query = "MATCH (n:Status) WHERE n.status_id = "+str(status_id)+"  RETURN n"
+	data, metadata = cypher.execute(graph_db, query)
+	if data:
+		for row in data:
+			return row[0]["likes"]
+	else:
+		print "\nStatus not found"
+		return 0
+
+#***********************************************************************************************************************
+
+def _get_events_attended_by(graph_db,user_name, user_guid):
+	if user_name != None and user_guid != None :
+		query = "MATCH (n:User)-[:Attends]-> (m:Event) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
+	elif user_name == None:
+		query = "MATCH (n:User)-[:Attends]-> (m:Event) WHERE n.guid = "+str(user_guid)+" RETURN m"
+	else:
+		query = "MATCH (n:User)-[:Attends]-> (m:Event) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
+	data, metadata = cypher.execute(graph_db, query)
+	ret = []
+	if data:
+		for row in data:
+			ret.append ({"\nEvent Id : "+str(row[0]["guid"]) })
+		print
+	else:
+		ret.append ({"\nEvent not found.\n"})
+	return ret
+
 
 #***********************************************************************************************************************

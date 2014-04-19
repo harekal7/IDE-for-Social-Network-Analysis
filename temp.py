@@ -1,4 +1,4 @@
 import snaide
 
 
-print snaide.get_page_likes_count("48658", None)
+print snaide.get_all_friends("Stephany Streich IV", None)
