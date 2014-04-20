@@ -33,6 +33,11 @@ input#log{
   margin-left: 10%;
 }
 
+div#save
+{
+	opacity: 0;
+}
+
 
 .jumbotron > button#sync  {
 	margin-top: 2%;

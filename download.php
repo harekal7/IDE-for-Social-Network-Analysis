@@ -7,6 +7,8 @@
 	The cypher statements are redirect to a gdb.txt file which can be downloaded.
 
 	*/
-
-	shell_exec("neo4j-shell -c dump > gdb.txt");
+	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+	//shell_exec("sudo rm gdb.txt");
+	//shell_exec("neo4j-shell -c dump > gdb.txt");
+	echo "http://localhost/IDE/g.txt";
 ?>

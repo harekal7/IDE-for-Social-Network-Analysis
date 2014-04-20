@@ -85,6 +85,7 @@
     <script type="text/javascript">
     $(document).ready(function()
     {
+       $.ajaxSetup({ cache: false });
        $("#download").click(function(){
           $.ajax({
             url:"download.php",
@@ -92,7 +93,7 @@
             dataType:"text",
             success:function(data)
             {
-              window.location.href = "http://localhost/IDE/gdb.txt";
+              window.location.href = data;
             }
         });
       });

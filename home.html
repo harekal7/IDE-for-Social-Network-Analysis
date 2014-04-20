@@ -70,6 +70,7 @@
     
     <div class="container theme-showcase" role="main">
       <div class="jumbotron">
+        <div id="save">Saving....</div>
         <form id="python-code" action="server.php" method="POST">
               <textarea id="t1" name="t2">import snaide</textarea>
         </form>
@@ -96,6 +97,7 @@
     <link rel="stylesheet" href="codemirror/lib/codemirror.css">
     <script src="codemirror/mode/python/python.js"></script>
     <link rel="stylesheet" href="codemirror/theme/cobalt.css">
+    <!--<link rel="stylesheet" href="codemirror/theme/cobalt.css">-->
     <!--<script src="js/docs.min.js"></script>-->
     
     <script type="text/javascript">
@@ -106,6 +108,19 @@
           username = "temp";
         $("#out").html("");
 
+        $(document).on('keydown', function(e)
+        {
+          if(e.ctrlKey && e.which === 83)
+          {
+            $("#save").css({"opacity":0.9});
+            id = setTimeout(function(){
+              $("#save").css({"opacity":0});
+            }, 3000);
+            editor.save();
+            e.preventDefault();
+            return false;
+          }
+        });
 
         $.ajax({
            url:username+".py",
