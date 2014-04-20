@@ -21,4 +21,4 @@ for key,value in location_list.items():
 	max_value = value
 	max_key = key
 	
-print max_key, max_value
+print max_key
