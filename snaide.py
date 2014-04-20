@@ -83,12 +83,11 @@ def get_event_date (event_name, event_guid):
 	return _snaide._get_event_date(graph_db, event_name, event_guid)
 	
 #***********************************************************************************************************************
-'''
+
 def get_event_start_time (event_name, event_guid):
 	global graph_db
 	return _snaide._get_event_start_time(graph_db, event_name, event_guid)
 	
-'''
 #***********************************************************************************************************************
 
 def get_event_title (event_guid):
@@ -412,13 +411,6 @@ def get_user_skills (user_name, user_guid):
 def get_user_last_login (user_name, user_guid):
 	global graph_db
 	return _snaide._get_user_last_login(graph_db, user_name, user_guid)	
-
-
-#***********************************************************************************************************************
-
-def get_statuses_by(user_name, user_guid):
-	global graph_db
-	return _snaide._get_statuses_by(graph_db, user_name, user_guid)	
 
 
 #***********************************************************************************************************************

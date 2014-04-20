@@ -1,6 +1,7 @@
 from py2neo import neo4j
 from py2neo import cypher 
-import time
+import datetime, time
+
 
 #***********************************************************************************************************************
 
@@ -16,6 +17,11 @@ def _init(_url):
 
 #***********************************************************************************************************************
 
+def _get_date_time(date_time):
+	return datetime.datetime.fromtimestamp(int(date_time)).strftime("%Y-%m-%d %H:%M:%S")
+
+
+#***********************************************************************************************************************
 '''
 fetches all the users of the social network
 and returns it in the form of a list of key-value pairs to the caller
@@ -216,14 +222,15 @@ def _get_event_date (graph_db,event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]))
+			ret =  _get_date_time(row[0]["created_time"])
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]))
 	else:
 		ret =  "Event not found"
 
 	return ret
 
 #***********************************************************************************************************************
-'''
+
 def _get_event_start_time (graph_db,event_name, event_guid):
 	# returns the info regarding the start time of events.
 	
@@ -236,12 +243,13 @@ def _get_event_start_time (graph_db,event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["start_time"]))
+			ret =  _get_date_time(row[0]["start_time"])
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["start_time"]))
 	else:
 		ret = "Event not found"
 
 	return ret
-'''
+
 #***********************************************************************************************************************
 
 def _get_event_title (graph_db, event_guid):
@@ -345,7 +353,8 @@ def _get_event_end_registration_day(graph_db, event_name, event_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["end_registration_day"]))
+			ret =  _get_date_time(row[0]["end_registration_day"])
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["end_registration_day"]))
 	else:
 		ret =  "\nNo Event/end registration day available.\n"
 
@@ -601,7 +610,8 @@ def _get_page_created_date (graph_db,page_name, page_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]))
+			ret = _get_date_time(row[0]["created_time"])
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]))
 	else:
 		ret =  "\nPage not found.\n"
 
@@ -881,7 +891,7 @@ def _get_blog_commentators (graph_db,blog_name, blog_guid):
 	if data:
 		ret = []
 		for row in data:
-			ret.append( row[0]["guid"] })
+			ret.append( row[0]["guid"] )
 	else:
 		ret = "\nUser not found.\n"
 
@@ -958,7 +968,8 @@ def _get_blog_created_time(graph_db, blog_name, blog_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]) )
+			ret = _get_date_time(row[0]["created_time"])
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["created_time"]) )
 	else:
 		ret = "\nBlog not found.\n"
 
@@ -1205,29 +1216,13 @@ def _get_user_last_login (graph_db, user_name, user_guid):
 	data, metadata = cypher.execute(graph_db, query)
 	if data:
 		for row in data:
-			ret =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["last_login"]))
+			ret = _get_date_time(row[0]["last_login"]) 
+			#time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(row[0]["last_login"]))
 	else:
 		ret = "User not found"
 
 	return ret
 
-#***********************************************************************************************************************
-
-
-def _get_statuses_by(graph_db,user_name, user_guid):
-	if user_name != None and user_guid != None :
-		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"
-	elif user_name == None:
-		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.guid = "+str(user_guid)+" RETURN m"
-	else:
-		query = "MATCH (n:User)-[:Posted]-> (m:Status) WHERE n.name = "+"'"+str(user_name)+"'"+" RETURN m"
-	data, metadata = cypher.execute(graph_db, query)
-	ret = []
-	if data:
-		for row in data:
-			ret.append({"guid":row[0]["status_id"]})
-
-	return ret
 
 #***********************************************************************************************************************
 
