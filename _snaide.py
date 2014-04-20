@@ -22,6 +22,13 @@ def _get_date_time(date_time):
 
 
 #***********************************************************************************************************************
+
+def _get_epoch(date_time):
+	return datetime.datetime.fromtimestamp(int(date_time)).strftime("%Y-%m-%d %H:%M:%S")
+
+
+#***********************************************************************************************************************
+
 '''
 fetches all the users of the social network
 and returns it in the form of a list of key-value pairs to the caller
@@ -1459,7 +1466,7 @@ def _is_user_member_of_group (graph_db, user_id, group_id):
 
 #***********************************************************************************************************************
 
-def _groups_with_user_as_member (graph_db, user_name, user_guid):
+def _groups_with_user_as_member (graph_db, user_name, user_gu_memd):
 	#returns all the groups in which user is a member
 	if user_name != None and user_guid != None :
 		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"

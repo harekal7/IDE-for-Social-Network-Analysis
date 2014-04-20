@@ -1,14 +1,24 @@
 import snaide
 
-friends_1 = snaide.get_all_friends("Samara Gaylord", None)
+users = snaide.get_all_users()
 
-print "Friend Suggester"
-print
-print "These are the users, You can add as your Firends"
-print
+location_list = {}
+for user in users:
+	l = snaide.get_user_location(None, user)
+	try:
+	  l = l.split(", ")[1]
+	  if location_list.has_key(l):
+		  location_list[l] = location_list[l] + 1
+	  else:
+		  location_list[l] = 1
+	except IndexError:
+	  pass
 
-for i in friends_1:
-	friends_2 = snaide.get_all_friends(None, i)
-  	for j in friends_2:
-		if snaide.is_friend(j, i) and not snaide.is_friend(j, 47173):
-		  print snaide.get_user_name(j)
+max_key = ""
+max_value = 0
+for key,value in location_list.items():
+  if value > max_value:
+	max_value = value
+	max_key = key
+	
+print max_key, max_value
