@@ -12,12 +12,6 @@ def get_all_users():
 
 #***********************************************************************************************************************
 
-def get_one_user(user_name, user_guid):
-	global graph_db
-	return _snaide._get_one_user(graph_db, user_name, user_guid)
-
-#***********************************************************************************************************************
-
 def get_all_events():
 	global graph_db
 	return _snaide._get_all_events(graph_db)
@@ -27,12 +21,6 @@ def get_all_events():
 def get_events_owned_by(user_name, user_guid):
 	global graph_db
 	return _snaide._get_events_owned_by(graph_db,user_name, user_guid)
-
-#***********************************************************************************************************************
-
-def get_one_event (event_name, event_guid):
-	global graph_db
-	return _snaide._get_one_event (graph_db, event_name, event_guid)
 	
 #***********************************************************************************************************************
 
@@ -83,13 +71,6 @@ def get_event_attendees (event_name, event_guid):
 
 #***********************************************************************************************************************
 
-def get_event_info (event_name, event_guid):
-	global graph_db
-	return _snaide._get_event_info(graph_db, event_name, event_guid)
-	
-
-#***********************************************************************************************************************
-
 def get_event_organizer (event_name, event_guid):
 	global graph_db
 	return _snaide._get_event_organizer(graph_db, event_name, event_guid)
@@ -102,12 +83,12 @@ def get_event_date (event_name, event_guid):
 	return _snaide._get_event_date(graph_db, event_name, event_guid)
 	
 #***********************************************************************************************************************
-
+'''
 def get_event_start_time (event_name, event_guid):
 	global graph_db
 	return _snaide._get_event_start_time(graph_db, event_name, event_guid)
 	
-
+'''
 #***********************************************************************************************************************
 
 def get_event_title (event_guid):
@@ -569,3 +550,17 @@ def get_events_attended_by(user_name, user_guid):
 def get_all_groups():
 	global graph_db
 	return _snaide._get_all_groups(graph_db)
+
+#***********************************************************************************************************************
+
+def get_status_message(status_id):
+	global graph_db
+	return _snaide._get_status_message(graph_db, status_id)
+
+#***********************************************************************************************************************
+
+def get_comment_message(comment_id):
+	global graph_db
+	return _snaide._get_comment_message(graph_db, comment_id)
+
+#***********************************************************************************************************************
