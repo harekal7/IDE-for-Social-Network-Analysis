@@ -91,3 +91,9 @@ div#wrong
 {
 	cursor:pointer;
 }
+
+#u
+{
+	opacity: 0%;
+	font-size: 30;
+}

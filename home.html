@@ -70,6 +70,7 @@
     
     <div class="container theme-showcase" role="main">
       <div class="jumbotron">
+        <p id="u">Welcome, User</p>
         <div id="save">Saving....</div>
         <form id="python-code" action="server.php" method="POST">
               <textarea id="t1" name="t2">import snaide</textarea>
@@ -106,6 +107,8 @@
         username = window.location.href.split("=")[1];
         if (username == null)
           username = "temp";
+        else
+          $("#u").html("Welcome, "+username);
         $("#out").html("");
 
         $(document).on('keydown', function(e)

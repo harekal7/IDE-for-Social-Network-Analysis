@@ -84,7 +84,7 @@
             <h3 class="panel-title">get_events_owned_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user guid<br>
+          Parameters : user name, user guid<br>
           Returns all event guids in the Social Network as a list that are owned by a user
           </div>
         </div>
@@ -94,7 +94,7 @@
             <h3 class="panel-title">get_statuses_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user_guid<br>
+          Parameters : user name, user guid<br>
           Returns all status guids posted by user in the Social Network as a list
           </div>
         </div>
@@ -108,7 +108,7 @@
             <h3 class="panel-title">get_group_members</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_guid<br>
+          Parameters : group name, group guid<br>
           Returns all user ids of members of group mentioned in the Social Network as a list
           </div>
         </div>
@@ -119,7 +119,7 @@
             <h3 class="panel-title">get_groups_owned_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user_guid<br>
+          Parameters : user name, user guid<br>
           Returns all the group ids owned by the user in a social network
           </div>
         </div>
@@ -133,6 +133,7 @@
           Returns all the page ids present in social network as a list
           </div>
         </div>
+      </div>
 
 
         <div class="panel panel-success">
@@ -140,7 +141,7 @@
             <h3 class="panel-title">get_events_created_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : username, user_guid<br>
+          Parameters : user name, user guid<br>
           Returns all event ids created by the user in the Social Network as a list
           </div>
         </div>
@@ -152,7 +153,7 @@
             <h3 class="panel-title">get_event_attendess</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns all event attendees as user ids for a given event in a list
           </div>
         </div>
@@ -164,7 +165,7 @@
             <h3 class="panel-title">get_event_organizer</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event organizer given the event name or event guid
           </div>
         </div>
@@ -174,7 +175,7 @@
             <h3 class="panel-title">get_event_date</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event date as Year-month-date Hour:Minute:Seconds of the given event
           </div>
         </div>
@@ -184,8 +185,9 @@
             <h3 class="panel-title">get_event_start_time</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
-
+          Parameters : event name, event guid<br>
+          Returns the event start time as Year-month-date Hour:Minute:Seconds of the given event
+          
           </div>
         </div>
 
@@ -194,7 +196,7 @@
             <h3 class="panel-title">get_event_title</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_guid<br>
+          Parameters : event guid<br>
           Returns the event title given the even guid
           </div>
         </div>
@@ -205,7 +207,7 @@
             <h3 class="panel-title">get_event_attendees_count</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the count of total no of event attendees
           </div>
         </div>
@@ -216,7 +218,7 @@
             <h3 class="panel-title">get_event_short_description</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event short discription
           </div>
         </div>
@@ -227,7 +229,7 @@
             <h3 class="panel-title">get_event_description</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event description given the event guid or event name
           </div>
         </div>
@@ -238,7 +240,7 @@
             <h3 class="panel-title">get_event_max_attendees</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the maximum_event attendees
           </div>
         </div>
@@ -250,7 +252,7 @@
             <h3 class="panel-title">get_event_event_end_registration_day</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_guid<br>
+          Parameters : event guid<br>
           Returns the event title given the event guid
           </div>
         </div>
@@ -261,7 +263,7 @@
             <h3 class="panel-title">get_event_fee</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event fee given the event guid or event name
           </div>
         </div>
@@ -273,7 +275,7 @@
             <h3 class="panel-title">get_event_contact_details</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event contact details given event name or event guid
           </div>
         </div>
@@ -284,7 +286,7 @@
             <h3 class="panel-title">get_event_venue</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event venue given the event name or event guid
           </div>
         </div>
@@ -295,7 +297,7 @@
             <h3 class="panel-title">get_event_location</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event location given the event name or event guid
           </div>
         </div>
@@ -307,7 +309,7 @@
             <h3 class="panel-title">get_event_website</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event website given the event name or event guid
           </div>
         </div>
@@ -319,7 +321,7 @@
             <h3 class="panel-title">get_event_twitter_hash</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event twitter hash given the event name or event guid
           </div>
         </div>
@@ -330,7 +332,7 @@
             <h3 class="panel-title">get_event_tags</h3>
           </div>
           <div class="panel-body">
-          Parameters : event_name, event_guid<br>
+          Parameters : event name, event guid<br>
           Returns the event tags given the event name or event guid
           </div>
         </div>
@@ -350,7 +352,7 @@
             <h3 class="panel-title">get_pages_created_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user_guid<br>
+          Parameters : user name, user guid<br>
           Returns the pages created by the user given the user name or user guid
           </div>
         </div>
@@ -362,7 +364,7 @@
             <h3 class="panel-title">get_pages_liked_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user_guid<br>
+          Parameters : user name, user guid<br>
           Returns the pages liked by the user given his user name or user guid
           </div>
         </div>
@@ -373,7 +375,7 @@
             <h3 class="panel-title">get_page_title</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_guid<br>
+          Parameters : page guid<br>
           Returns the page title given page guid
           </div>
         </div>
@@ -385,7 +387,7 @@
             <h3 class="panel-title">get_page_created_date</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the page created date given page name or page guid
           </div>
         </div>
@@ -398,7 +400,7 @@
             <h3 class="panel-title">get_page_likes_count</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the page likes count for a given page
           </div>
         </div>
@@ -410,7 +412,7 @@
             <h3 class="panel-title">get_page_content</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the page content
           </div>
         </div>
@@ -422,7 +424,7 @@
             <h3 class="panel-title">get_page_tags</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the page tags given the page name or page guid
           </div>
         </div>
@@ -432,7 +434,7 @@
             <h3 class="panel-title">get_page_container_group</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the group to which the page belongs to
           </div>
         </div>
@@ -445,7 +447,7 @@
             <h3 class="panel-title">get_group_members_count</h3>
           </div>
           <div class="panel-body">
-          Parameters : page_name, page_guid<br>
+          Parameters : page name, page guid<br>
           Returns the count of total members in a group given group given group name or gorup_id
           </div>
         </div>
@@ -460,7 +462,7 @@
             <h3 class="panel-title">get_group_owner</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_id<br>
+          Parameters : group name, group id<br>
           Returns the owner of group given his group_name or group_id
           </div>
         </div>
@@ -470,7 +472,7 @@
             <h3 class="panel-title">get_group_name</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_id<br>
+          Parameters : group id<br>
           Returns the group name given the group_id
           </div>
         </div>
@@ -481,7 +483,7 @@
             <h3 class="panel-title">get_group_description</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_id<br>
+          Parameters : group name, group id<br>
           Returns the group description given group_name or group_id
           </div>
         </div>
@@ -492,7 +494,7 @@
             <h3 class="panel-title">get_group_brief_description</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_id<br>
+          Parameters : group name, group id<br>
           Returns the group brief description given group_name or group_id else return
           </div>
         </div>
@@ -503,7 +505,7 @@
             <h3 class="panel-title">is_events_enabled_in_group</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_id<br>
+          Parameters : group name, group id<br>
           Returns true if enabled and false if not enbled.
           </div>
         </div>
@@ -515,7 +517,7 @@
             <h3 class="panel-title">is_pages_enabled_in_group</h3>
           </div>
           <div class="panel-body">
-          Parameters : group_name, group_id<br>
+          Parameters : group name, group id<br>
           Returns true if enabled and false if not enbled.
           </div>
         </div>
@@ -976,7 +978,7 @@
           Returns comment for the given comment id
           </div>
         </div>
-      </div>
+
 
     </div>
 
