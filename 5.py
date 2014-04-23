@@ -10,7 +10,7 @@ v7 = snaide.get_all_blogs_count()
 v8 = snaide.get_all_groups_count()
 
 
-print "total number of users : "+ str(v1)
+#print "total number of users : "+ str(v1)
 print "average no of status per user posted : " + str(float(v2)/v1)
 print "average no of comments per each status : " + str(v3/float(v2))
 print "average likes for each status : " + str(v4/float(v2)) 

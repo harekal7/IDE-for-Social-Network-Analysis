@@ -156,14 +156,14 @@ def model_users_statuses_comments(db):
 										for row5 in cur5.fetchall():
 												comment, = graph_db.create({"comment_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0], "tags":tags })
 												comment.add_labels("Comment")
-												query_string = "MATCH (a:Status),(b:Comment) WHERE a.status_id ="+str(row5[0])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:has_comment]->(b) RETURN r"
+												query_string = "MATCH (a:Status),(b:Comment) WHERE a.status_id ="+str(row5[0])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:has_comment]->(b) CREATE (b)-[r:for_status]->(a) RETURN r"
 												result = neo4j.CypherQuery(graph_db, query_string).execute()
-												query_string = "MATCH (a:User),(b:Comment) WHERE a.guid ="+str(row1[1])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r:comments]->(b) RETURN r"
+												query_string = "MATCH (a:User),(b:Comment) WHERE a.guid ="+str(row1[1])+" AND b.comment_id = "+str(row2[0])+" CREATE (a)-[r1:comments]->(b) CREATE (b)-[r2:comment_by]->(a) RETURN r1, r2"
 												result = neo4j.CypherQuery(graph_db, query_string).execute()
 								else:
 										status, = graph_db.create({"status_id":row2[0], "message":str(row3[0]), "updated_time":str(row2[1]), "likes":row4[0], "tags":tags })
 										status.add_labels("Status")
-										query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r:Posted]->(b) RETURN r"
+										query_string = "MATCH (a:User),(b:Status) WHERE a.guid ="+str(row1[1])+" AND b.status_id = "+str(row2[0])+" CREATE (a)-[r1:Posted]->(b) CREATE (b)-[r2:Posted_by]->(a) RETURN r1, r2"
 										result = neo4j.CypherQuery(graph_db, query_string).execute()
 
 #**********************************************************************************************************************

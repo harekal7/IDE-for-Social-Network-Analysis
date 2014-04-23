@@ -1466,7 +1466,7 @@ def _is_user_member_of_group (graph_db, user_id, group_id):
 
 #***********************************************************************************************************************
 
-def _groups_with_user_as_member (graph_db, user_name, user_gu_memd):
+def _groups_with_user_as_member (graph_db, user_name, user_guid):
 	#returns all the groups in which user is a member
 	if user_name != None and user_guid != None :
 		query = "MATCH (n:User)-[:is_member]-> (m:Group) WHERE n.guid = "+str(user_guid)+" and n.name = "+"'"+str(user_name)+"' RETURN m"

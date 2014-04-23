@@ -10,5 +10,7 @@ for friend in friends:
 		if not snaide.is_user_member_of_group(47173, j):
 			group.add(j)
 
+print "These are the groups you may be interested in : \n"
+
 for e in group:
 	print snaide.get_group_name(e)

@@ -45,7 +45,7 @@
           <ul class="nav navbar-nav">
             <li><a href="home.html">Home</a></li>
             <li><a href="offline.html">Help</a></li>
-            <li class="active"><a href="about.html">Documentation</a></li>
+            <li><a href="about.html" class="active">Documentation</a></li>
             <li> <a href="logout.php">Logout</a></li>
           </ul>
 	</div>
@@ -55,16 +55,6 @@
     <div class="container theme-showcase" role="main">
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">get_one_user</h3>
-          </div>
-          <div class="panel-body">
-          Parameters : user_name, user_guid<br>
-          Returns a user based username or guid
-          </div>
-        </div>
 
         <div class="panel panel-success">
           <div class="panel-heading">
@@ -72,17 +62,7 @@
           </div>
           <div class="panel-body">
           Parameters : None<br>
-          Returns all users of the Social Network as a list
-          </div>
-        </div>
-
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">get_one_event</h3>
-          </div>
-          <div class="panel-body">
-          Parameters : event_name, event_guid<br>
-          Returns event information based on the name of the event or based on the guid of the event
+          Returns all user ids of the Social Network as a list
           </div>
         </div>
 
@@ -92,17 +72,20 @@
           </div>
           <div class="panel-body">
           Parameters : None<br>
-          Returns all events in the Social Network as a list
+          Returns all event guids in the Social Network as a list
           </div>
         </div>
 
+
+       
+       
         <div class="panel panel-success">
           <div class="panel-heading">
             <h3 class="panel-title">get_events_owned_by</h3>
           </div>
           <div class="panel-body">
-          Parameters : user_name, user_guid<br>
-          Returns all events owned/created by a particular user based on username or guid as a list
+          Parameters : user_name, user guid<br>
+          Returns all event guids in the Social Network as a list that are owned by a user
           </div>
         </div>
 
@@ -112,19 +95,13 @@
           </div>
           <div class="panel-body">
           Parameters : user_name, user_guid<br>
-          Returns all statuses posted by a particular user based on username or guid as a list
+          Returns all status guids posted by user in the Social Network as a list
           </div>
         </div>
 
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">get_comments_by</h3>
-          </div>
-          <div class="panel-body">
-          Parameters : user_name, user_guid<br>
-          Returns all comments posted by a particular user based on username or guid as a list
-          </div>
-        </div>
+
+       
+
 
         <div class="panel panel-success">
           <div class="panel-heading">
@@ -132,9 +109,10 @@
           </div>
           <div class="panel-body">
           Parameters : group_name, group_guid<br>
-          Returns all members of a particular group based on the group name or guid as a list
+          Returns all user ids of members of group mentioned in the Social Network as a list
           </div>
         </div>
+
 
         <div class="panel panel-success">
           <div class="panel-heading">
@@ -142,7 +120,7 @@
           </div>
           <div class="panel-body">
           Parameters : user_name, user_guid<br>
-          Returns all the groups owned/created by a particular user based on username or guid as a list
+          Returns all the group ids owned by the user in a social network
           </div>
         </div>
 
@@ -152,13 +130,856 @@
           </div>
           <div class="panel-body">
           Parameters : None<br>
-          Returns all pages in the Social Network as a list
+          Returns all the page ids present in social network as a list
           </div>
         </div>
 
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_events_created_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : username, user_guid<br>
+          Returns all event ids created by the user in the Social Network as a list
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_attendess</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns all event attendees as user ids for a given event in a list
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_organizer</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event organizer given the event name or event guid
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_date</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event date as Year-month-date Hour:Minute:Seconds of the given event
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_start_time</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_title</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_guid<br>
+          Returns the event title given the even guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_attendees_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the count of total no of event attendees
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_short_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event short discription
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event description given the event guid or event name
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_max_attendees</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the maximum_event attendees
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_event_end_registration_day</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_guid<br>
+          Returns the event title given the event guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_fee</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event fee given the event guid or event name
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_contact_details</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event contact details given event name or event guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_venue</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event venue given the event name or event guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_location</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event location given the event name or event guid
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_website</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event website given the event name or event guid
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_twitter_hash</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event twitter hash given the event name or event guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_event_tags</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : event_name, event_guid<br>
+          Returns the event tags given the event name or event guid
+          </div>
+        </div>
+
+
+
+
+    
+       
+
+
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_pages_created_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns the pages created by the user given the user name or user guid
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_pages_liked_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user_name, user_guid<br>
+          Returns the pages liked by the user given his user name or user guid
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_title</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_guid<br>
+          Returns the page title given page guid
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_created_date</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the page created date given page name or page guid
+          </div>
+        </div>
+
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_likes_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the page likes count for a given page
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_content</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the page content
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_tags</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the page tags given the page name or page guid
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_page_container_group</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the group to which the page belongs to
+          </div>
+        </div>
+
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_group_members_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : page_name, page_guid<br>
+          Returns the count of total members in a group given group given group name or gorup_id
+          </div>
+        </div>
+
+
+
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_group_owner</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_name, group_id<br>
+          Returns the owner of group given his group_name or group_id
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_group_name</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_id<br>
+          Returns the group name given the group_id
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_group_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_name, group_id<br>
+          Returns the group description given group_name or group_id
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_group_brief_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_name, group_id<br>
+          Returns the group brief description given group_name or group_id else return
+          </div>
+        </div>
+        
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">is_events_enabled_in_group</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_name, group_id<br>
+          Returns true if enabled and false if not enbled.
+          </div>
+        </div>
+ 
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">is_pages_enabled_in_group</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group_name, group_id<br>
+          Returns true if enabled and false if not enbled.
+          </div>
+        </div>
+        
+       
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_likers</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog guid<br>
+          Returns the list of user guids who liked the blog given blog name or blog guid.
+          </div>
+        </div>
+       
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_name</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog guid<br>
+          Returns blog name for the given blog guid.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog guid<br>
+          Returns blog description for the given blog guid.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_tags</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog guid<br>
+          Returns blog tags as a list for the given blog guid.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_created_time</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog guid<br>
+          Returns the blog created time as Year-month-date Hour:Minute:Seconds of the given event
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blogs_by_user</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns the blog guids written by user as a list.
+          
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_likers_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog guid<br>
+          Returns the count of users who liked the blog.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_users_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns the count of users are in social network.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_name</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user guid<br>
+          Returns the user name for given user guid.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_location</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user nameuser guid<br>
+          Returns the user location for given user guid or user name.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_brief_description</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns the user description for given user guid or user name.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_contact_email</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns the user email id for given user guid or user name.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_telephone</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : use name, user guid<br>
+          Returns the user telephone no for given user guid or user name.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_mobile_phone</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : use name, user guid<br>
+          Returns the user mobile phone no for given user guid or user name.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_website</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : use name, user guid<br>
+          Returns the user website url for given user guid or user name.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_interests</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : use name, user guid<br>
+          Returns the user interests as a list for given user guid or user name.
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_skills</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : use name, user guid<br>
+          Returns the user skills as a list for given user guid or user name.
+          if user guid is incorrect, returns None
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_statuses</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns all statuses posted in Social Network as a list.
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_status_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all statuses posted in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_comments_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all comments in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_events_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all events organized in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_pages_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all pages in Social Network as a list.
+          </div>
+        </div>
+
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_blogs_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all blogs written in Social Network as a list.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_commentators_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog id<br>
+          Returns count of all users who has comment on blog with blog id given in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_blog_commentators</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : blog name, blog id<br>
+          Returns user guids of all users who has a comment on blog with blog id or blog name given in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_groups_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all groups in Social Network as a list.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_status_likes_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns count of all likes to status in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_friends</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns user guids of all users who are friends to given user in Social Network as a list.
+          
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_friends_count</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns count of all users who are friends to given user in Social Network as a list.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_comments_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns all comments of user in Social Network as a list.
+
+          </div>
+        </div>
+
+      
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">is_friend</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user guid1, user guid2<br>
+          Returns true if they are friends else false
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">is_user_member_of_group</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user guid1, group id<br>
+          Returns true if user is member of group else false
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">groups_with_user_as_member</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns group ids of groups in which user is member of.
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_blogs</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns blog guids of all blogs in Social Network
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">is_blogs_enabled</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : group name, group id<br>
+          Returns true if blogs are enabled in the group given else return false
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_statuses_count_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns count of total statuses posted by user in a social network
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_likes_on_single_status</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : status id<br>
+          Returns count of total likes on given status
+          
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_user_last_login</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns last login date as Year-month-date Hour:Minute:Seconds
+          
+          </div>
+        </div>
+
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_events_attended_by</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : user name, user guid<br>
+          Returns event guids of events which user has attended.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_all_groups</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : None<br>
+          Returns group ids of all groups in a social network.
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_status_message</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : status id<br>
+          Returns status for the given status id
+          
+          </div>
+        </div>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">get_comment_message</h3>
+          </div>
+          <div class="panel-body">
+          Parameters : status id<br>
+          Returns comment for the given comment id
+          </div>
+        </div>
       </div>
 
     </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

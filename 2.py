@@ -1,6 +1,6 @@
 import snaide
 
-friends_1 = snaide.get_all_friends("Samara Gaylord", None)
+friends_1 = snaide.get_all_friends(None, 47173)
 
 print "Friend Suggester"
 print

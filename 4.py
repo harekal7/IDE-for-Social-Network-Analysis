@@ -1,8 +1,8 @@
 import snaide
 
-friends_count = snaide.get_all_friends_count(None, 48150)
+friends_count = snaide.get_all_friends_count(None, 48158)
 
-friends = snaide.get_all_friends(None, 48150)
+friends = snaide.get_all_friends(None, 48158)
 
 pages_sum = 0
 comments_sum = 0

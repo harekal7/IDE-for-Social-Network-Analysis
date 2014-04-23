@@ -24,14 +24,12 @@ def get_esai_user (user_name, user_id):
 
 
 	#calculating the event factor
-	# this is partially done..
-	# or do it the way it pleases you
 	event_id_list = snaide.get_events_attended_by(user_name , user_id)
 	event_attendees_count = 0
+	events_factor = 25
 	for event_id in event_id_list:
 		event_attendees_count = event_attendees_count + snaide.get_event_attendees_count(None, event_id)
 
-	events_factor = 25
 
 	return status_factor + likes_factor + events_factor
 
