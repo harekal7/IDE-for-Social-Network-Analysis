@@ -126,7 +126,7 @@
         });
 
         $.ajax({
-           url:username+".py",
+           url:"UserEnv/"+username+".py",
            type:"GET",
            dataType:"text",
            success:function(data)
@@ -161,7 +161,7 @@
         $(".examples").click(function(e){
           editor.save();
           $.ajax({
-            url:e.target.id+".py",
+            url:"examples/"+e.target.id+".py",
             type:"GET",
             dataType:"text",
             success:function(data)

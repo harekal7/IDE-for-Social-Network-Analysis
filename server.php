@@ -25,9 +25,9 @@
 	so that errors are also displayed in the output in the IDE.
 	*/
 
-	$file = "/var/www/IDE/$file_name.py";
+	$file = "/var/www/IDE/UserEnv/$file_name.py";
 	shell_exec("rm $file; touch $file");
 	file_put_contents($file, $content);
-	echo shell_exec("python /var/www/IDE/$file_name.py 2>&1");
+	echo shell_exec("python /var/www/IDE/UserEnv/$file_name.py 2>&1");
 ?>
 
