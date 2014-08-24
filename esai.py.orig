@@ -1,7 +1,0 @@
-import snaide
-<<<<<<< HEAD
-print snaide.get_all_users()
-=======
-for page in snaide.get_all_pages():
-  print page["name"]
->>>>>>> 5b11d9307a60edba83e738df9291d0391f63b2fc
